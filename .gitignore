@@ -1,8 +1,8 @@
 node_modules
 # Ignore node_modules for frontend and backend
-frontend/node_modules
-backend/node_modules
+ client/node_modules 
+ server/node_modules
 
 # Ignore .env files for frontend and backend
-frontend/.env
-backend/.env
+client/.env
+server/.env
