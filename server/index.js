@@ -10,7 +10,7 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT || 4000;
 connectDB();
-console.log(process.env.SMPT_USER)
+
 
 app.use(express.json());
 app.use(cookieParser());
