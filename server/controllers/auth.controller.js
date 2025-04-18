@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
 const { mongoose } = require("mongoose");
+const transporter = require("../config/nodemailer.js");
 
 const register = async (req, res) => {
     const { name, email, password } = req.body;
@@ -27,6 +28,14 @@ const register = async (req, res) => {
             maxAge: 1 * 60 * 60 * 1000
         });
         await user.save();
+
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: email,
+            subject: "Welcome to Simple Auth.",
+            text: `Hello, Nice to meet you ${name}.Your account has been created. Thanks you choosing our website.`,
+        }
+        await transporter.sendMail(mailOptions)
 
         return res.status(200).json({ success: true, message: "success", user });
 
