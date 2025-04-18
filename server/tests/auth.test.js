@@ -2,6 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require("../index.js")// Adjust if your app is in a different file
 const User = require('../models/User.model.js');
+let userId = '68021fd135bebbba080e3e91'
 
 describe('Auth API', () => {
     const testUser = {
@@ -16,7 +17,7 @@ describe('Auth API', () => {
     });
 
     afterAll(async () => {
-        await User.deleteMany({});
+        // await User.deleteMany({});
         await mongoose.connection.close();
     });
 
@@ -57,4 +58,9 @@ describe('Auth API', () => {
         expect(res.statusCode).toBe(200);
         expect(res.body.success).toBe(true);
     });
+    it("should update succefully", async () => {
+        const res = await request(app).put(`/api/v1/auth/update/${userId}`);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true)
+    })
 });
