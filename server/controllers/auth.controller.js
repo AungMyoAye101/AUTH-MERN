@@ -96,7 +96,7 @@ const logout = async (req, res) => {
 //user update
 const updateUser = async (req, res) => {
     const { id } = req.params
-    console.log(id, req.body)
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: "User id is not valid!" });
     }
@@ -111,9 +111,44 @@ const updateUser = async (req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+
+const otpVerify = async (req, res) => {
+    const id = req.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: "User id is not valid!" });
+    }
+    try {
+        const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!" });
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        const otpExpireIn = new Date(Date.now() + 3 * 60 * 1000)
+
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: user.email,
+            subject: "Simple Auth OTP",
+            text: `<div><h1>Hello, ${user.name}</h1> <h2>Your Otp is <b>${otp}</b> expires in 3 minutes.</h2><p>Don't share anyone.</p>
+            <p><i>Thanks you</i> choosing our website.</p></div>`,
+        }
+        await transporter.sendMail(mailOptions)
+
+        user.verifyOtp = otp;
+        user.otpExpireIn = otpExpireIn;
+        await user.save()
+
+        return res.status(200).json({ success: true, message: "Verification code has been send" });
+
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
 module.exports = {
     register,
     login,
     logout,
-    updateUser
+    updateUser,
+    otpVerify
 };

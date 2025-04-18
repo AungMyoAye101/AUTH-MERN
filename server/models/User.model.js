@@ -13,6 +13,17 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    verifyOpt: {
+        type: String,
+        default: ''
+    },
+    optExpireIn: {
+        type: Date,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 })
 const User = mongoose.models.User || mongoose.model("User", userSchema)
