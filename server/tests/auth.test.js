@@ -1,0 +1,60 @@
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require("../index.js")// Adjust if your app is in a different file
+const User = require('../models/User.model.js');
+
+describe('Auth API', () => {
+    const testUser = {
+        name: 'Test User',
+        email: 'testuser@example.com',
+        password: 'test1234'
+    };
+
+    beforeAll(async () => {
+        // Connect to test DB (make sure it's a separate test database)
+        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/auth_test_db');
+    });
+
+    afterAll(async () => {
+        await User.deleteMany({});
+        await mongoose.connection.close();
+    });
+
+    it('should register a user', async () => {
+        const res = await request(app).post('/api/v1/auth/register').send(testUser);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(res.body.user.email).toBe(testUser.email);
+    });
+
+    it('should not register with existing email', async () => {
+        const res = await request(app).post('/api/v1/auth/register').send(testUser);
+        expect(res.statusCode).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should login the user', async () => {
+        const res = await request(app).post('/api/v1/auth/login').send({
+            email: testUser.email,
+            password: testUser.password
+        });
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(res.body.user.email).toBe(testUser.email);
+    });
+
+    it('should not login with incorrect password', async () => {
+        const res = await request(app).post('/api/v1/auth/login').send({
+            email: testUser.email,
+            password: 'wrongpass'
+        });
+        expect(res.statusCode).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should logout successfully', async () => {
+        const res = await request(app).post('/api/v1/auth/logout');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+    });
+});

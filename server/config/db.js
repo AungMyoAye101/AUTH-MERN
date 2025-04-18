@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose")
 
-export const connectDB = async () => {
+const connectDB = async () => {
     const url = process.env.MONGODB_URI
     if (!url) {
         throw new Error("Database url is invalid!")
@@ -14,3 +14,4 @@ export const connectDB = async () => {
     }
 
 }
+module.exports = connectDB
