@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken"
 import User from "../models/User.model.js"
+import bcrypt from "bcryptjs"
 
 
 export const register = async (req, res) => {
     const { name, email, password } = req.body
-    if (!name || !email || password) {
-        return res.status(400).json({ success: false, message: "All fileds are required!" })
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ success: false, message: "All fields are required!" })
     }
     try {
         const existingUser = await User.findOne({ email })

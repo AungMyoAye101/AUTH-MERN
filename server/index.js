@@ -17,7 +17,7 @@ app.use(cors({ credentials: true }))
 
 // Auth routes
 
-app.use('/api/v1', authRouters)
+app.use('/api/v1/auth', authRouters)
 
 app.get('/', (req, res) => res.send("Server is alive."))
 app.listen(port, () => console.log("Server is listening on port " + port))

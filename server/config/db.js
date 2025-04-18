@@ -6,8 +6,8 @@ export const connectDB = async () => {
         throw new Error("Database url is invalid!")
     }
     try {
-        await mongoose.connect(url)
-        console.log("Database connected successfull!")
+        mongoose.connect(url).then(() => console.log("Database connected successfull!"))
+
     } catch (error) {
         console.error("Database disconnected!")
         process.exit(1)
