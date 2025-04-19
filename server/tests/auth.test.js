@@ -6,7 +6,7 @@ const User = require('../models/User.model.js');
 describe('Auth API', () => {
     const testUser = {
         name: 'Test User',
-        email: 'testuser2@example.com',
+        email: 'testuser3@example.com',
         password: 'test1234'
     };
     let userId;
@@ -55,6 +55,12 @@ describe('Auth API', () => {
         expect(res.statusCode).toBe(400);
         expect(res.body.success).toBe(false);
     });
+
+    it("Should user already login", async () => {
+        const res = await request(app).post("api/v1/auth/me").set('Cookie', cookie)
+        expect(res.statusCode).toBe(200)
+        expect(res.message).toBe("User already login")
+    })
 
     it('should logout successfully', async () => {
         const res = await request(app).post('/api/v1/auth/logout');

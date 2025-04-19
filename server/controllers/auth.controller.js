@@ -112,6 +112,7 @@ const updateUser = async (req, res) => {
     }
 }
 
+//send OTP code to user 
 const otpVerify = async (req, res) => {
     const id = req.id;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -146,7 +147,7 @@ const otpVerify = async (req, res) => {
     }
 }
 
-
+//verify email 
 const verifyEmail = async (req, res) => {
     const id = req.id
     const { otp } = req.body
@@ -184,11 +185,22 @@ const verifyEmail = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to verify email!" })
     }
 }
+
+//check user is authicated
+
+const currentUser = async (req, res) => {
+    try {
+        return res.status(200).json({ success: true, message: "User already login", id: req.id })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to check current user!" })
+    }
+}
 module.exports = {
     register,
     login,
     logout,
     updateUser,
     otpVerify,
-    verifyEmail
+    verifyEmail,
+    currentUser
 };
