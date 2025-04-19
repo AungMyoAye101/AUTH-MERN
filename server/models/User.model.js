@@ -14,11 +14,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    verifyOpt: {
+    verifyOtp: {
         type: String,
         default: ''
     },
-    optExpireIn: {
+    otpExpireIn: {
         type: Date,
     },
     isVerified: {

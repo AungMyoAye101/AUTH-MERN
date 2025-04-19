@@ -123,14 +123,14 @@ const otpVerify = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found!" });
         }
         const otp = Math.floor(100000 + Math.random() * 900000).toString()
-        const otpExpireIn = new Date(Date.now() + 3 * 60 * 1000)
+        const otpExpireIn = new Date(Date.now() + 5 * 60 * 1000)
 
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: user.email,
             subject: "Simple Auth OTP",
-            text: `<div><h1>Hello, ${user.name}</h1> <h2>Your Otp is <b>${otp}</b> expires in 3 minutes.</h2><p>Don't share anyone.</p>
-            <p><i>Thanks you</i> choosing our website.</p></div>`,
+            text: `<div><h1>Hello, ${user.name}</h1> <h2>Your OTP is <b>${otp}</b> expires in 5 minutes.</h2><p>Don't share anyone.</p>
+            <p><i>Thank you for</i> choosing our website.</p></div>`,
         }
         await transporter.sendMail(mailOptions)
 
@@ -145,10 +145,50 @@ const otpVerify = async (req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+
+
+const verifyEmail = async (req, res) => {
+    const id = req.id
+    const { otp } = req.body
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: "Invalid user id!" })
+    }
+    try {
+        const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!" })
+        }
+        if (user.isVerified) {
+            return res.status(400).json({ success: false, message: "User account is already verified!" })
+        }
+        if (Date.now() > user.otpExpireIn) {
+            return res.status(400).json({ success: false, message: "Your OTP is expired!" })
+        }
+        if (otp !== user.verifyOtp) {
+            return res.status(400).json({ success: false, message: "Your OTP is not correct!" })
+        }
+        user.isVerified = true;
+
+        await user.save()
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: user.email,
+            subject: "Account Verify Notification",
+            text: `<div><h1>Hello, ${user.name}</h1> <h2>Your account has been verified.</h2><p>Now,you can you use all features in our site</p>
+            <p><i>Thanks you</i> choosing our website.</p></div>`,
+        }
+        await transporter.sendMail(mailOptions)
+        return res.status(200).json({ success: true, message: "Your account has been verified!" })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to verify email!" })
+    }
+}
 module.exports = {
     register,
     login,
     logout,
     updateUser,
-    otpVerify
+    otpVerify,
+    verifyEmail
 };
