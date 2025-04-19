@@ -22,12 +22,12 @@ const register = async (req, res) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
+        await user.save();
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             maxAge: 1 * 60 * 60 * 1000
         });
-        await user.save();
 
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
@@ -37,7 +37,7 @@ const register = async (req, res) => {
         }
         await transporter.sendMail(mailOptions)
 
-        return res.status(200).json({ success: true, message: "success", user });
+        return res.status(201).json({ success: true, message: "success", user });
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -138,7 +138,7 @@ const otpVerify = async (req, res) => {
         user.otpExpireIn = otpExpireIn;
         await user.save()
 
-        return res.status(200).json({ success: true, message: "Verification code has been send" });
+        return res.status(200).json({ success: true, message: "Verification code has been send", user });
 
 
     } catch (error) {
