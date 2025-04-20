@@ -1,4 +1,5 @@
 
+import { loginData } from '../assets/lib/helper'
 import Form from '../components/ui/Form'
 import FormController from '../components/ui/FormController'
 import { Link } from 'react-router-dom'
@@ -11,11 +12,11 @@ const Login = () => {
                 {
 
 
-                    [1, 2, 3, 4].map((i) => (<FormController key={i} type="email" name="name" id="name" placeholder="Enter your name" onChange={() => { }} style="bg-white" />))
+                    loginData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={() => { }} style="bg-white" />))
                 }
                 <div className='flex justify-between items-center gap-2 text-sm'>
-                    <Link to={'/'} className='text-blue-400'>Forgot password?</Link>
-                    <Link to={'/signup'} className='text-blue-400'>Sign up</Link>
+                    <Link to={'/'} className='link_text'>Forgot password?</Link>
+                    <Link to={'/signup'} className='link_text'>Sign up</Link>
                 </div>
             </Form>
         </section>

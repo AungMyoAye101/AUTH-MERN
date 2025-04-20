@@ -1,8 +1,23 @@
 import React from 'react'
+import { signupData } from '../assets/lib/helper'
+import Form from '../components/ui/Form'
+import { Link } from 'react-router-dom'
+import FormController from '../components/ui/FormController'
 
 const Signup = () => {
     return (
-        <div>Signup</div>
+        <section className='flex justify-center items-center  p-4'>
+
+            <Form headingText='Signup'>
+                {
+                    signupData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={() => { }} style="bg-white" />))
+                }
+                <div className='flex justify-between items-center gap-2 text-sm'>
+                    <p className='link_text'>Already have an account</p>
+                    <Link to={'/login'} className='link_text'>Login</Link>
+                </div>
+            </Form>
+        </section>
     )
 }
 

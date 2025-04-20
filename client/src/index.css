@@ -5,3 +5,9 @@
 body {
     background-color: #f7f7f7;
 }
+
+@layer base {
+    .link_text {
+        @apply text-neutral-700 hover:text-blue-400 text-xs font-serif
+    }
+}

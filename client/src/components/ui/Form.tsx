@@ -7,10 +7,10 @@ type FormPropsTypes = {
 
 const Form = ({ children, headingText }: FormPropsTypes) => {
     return (
-        <form className="min-w-lg w-96 max-w-xl bg-white p-4 rounded-md border flex flex-col gap-3">
-            <h1 className="text-xl md:text-2xl font-semibold text-center">{headingText}</h1>
+        <form className="min-w-lg w-96 max-w-xl bg-white px-4 py-6 rounded-lg shadow-md border flex flex-col gap-3">
+            <h1 className="text-xl md:text-2xl font-semibold text-center font-serif">{headingText}</h1>
             {children}
-            <Button>submit</Button>
+            <Button className="bg-blue-200 h-10">submit</Button>
         </form>
     )
 }

@@ -6,21 +6,26 @@ import Signup from './pages/Signup'
 import OtpVerify from './pages/OtpVerify'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
+import NavBar from './components/NavBar'
 
 function App() {
 
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/verify' element={<OtpVerify />} />
-        <Route path='/user/:id' element={<Profile />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
+      <NavBar />
+      <section className='max-w-6xl mx-auto p-4'>
+        <Routes>
+
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/verify' element={<OtpVerify />} />
+          <Route path='/user/:id' element={<Profile />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Routes>
+      </section>
+    </BrowserRouter >
 
   )
 }
