@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { signupData } from '../assets/lib/helper'
 import Form from '../components/ui/Form'
 import { Link } from 'react-router-dom'
