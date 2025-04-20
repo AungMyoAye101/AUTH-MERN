@@ -11,7 +11,7 @@ type InputType = {
 const FormController = ({ type = 'text', name, id, placeholder, onChange, style }: InputType) => {
     return (
         <label htmlFor={id}>
-            <input type={type} name={name} id={id} onChange={onChange} placeholder={placeholder} className={`h-8 p-2 w-full border focus:outline-none bg-neutral-100 rounded-lg ${style}`} />
+            <input type={type} name={name} id={id} onChange={onChange} placeholder={placeholder} className={`h-10 px-4 w-full border focus:outline-none bg-neutral-100 rounded-lg ${style}`} />
         </label>
     )
 }
