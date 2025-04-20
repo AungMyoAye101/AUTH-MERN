@@ -4,7 +4,7 @@ type InputType = {
     id: string,
     placeholder: string,
     style?: string,
-    onChange: (e: React.ChangeEvent) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 
 }
 
