@@ -1,5 +1,5 @@
 
-import { signupData } from '../assets/lib/helper'
+import { signupData } from '../lib/helper'
 import Form from '../components/ui/Form'
 import { Link } from 'react-router-dom'
 import FormController from '../components/ui/FormController'

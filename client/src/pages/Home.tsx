@@ -1,23 +1,16 @@
-import Button from "../components/ui/Button"
+import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
 
 
 
 const Home = () => {
-    const { name, email, isVerified } = useAuth()
+    const { name, email } = useAuth()
     return (
         <div className='h-screen flex justify-center items-center'>
-            <div className="space-y-4">
-                <h1 className="text-2xl md:4xl font-semibold font-serif ">Welcome {name},</h1>
+            <div className="flex flex-col gap-4 items-start">
+                <h1 className="text-2xl md:4xl font-semibold font-serif ">Welcome {name ? name : "to Simple Auth"},</h1>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos natus voluptatem aspernatur deserunt possimus, tenetur quis atque accusantium quod cumque esse eius reiciendis at incidunt magnam dicta iusto. Quae, iste. {email}</p>
-                <div>
-
-                    {
-                        isVerified ? "" : "Please verify your account."
-                    }
-                </div>
-
-                <Button className="">Register now</Button>
+                <Link to={'/signup'} className="link_btn">Register now</Link>
 
             </div>
 

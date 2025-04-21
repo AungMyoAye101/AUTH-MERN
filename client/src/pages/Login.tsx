@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { loginData } from '../assets/lib/helper'
+import { loginData } from '../lib/helper'
 import Form from '../components/ui/Form'
 import FormController from '../components/ui/FormController'
 import { Link } from 'react-router-dom'

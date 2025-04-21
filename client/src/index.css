@@ -7,7 +7,7 @@ body {
 }
 
 @layer base {
-    .link_text {
-        @apply text-neutral-700 hover:text-blue-400 text-xs font-serif
+    .link_btn {
+        @apply text-blue-50 bg-blue-400 text-sm font-serif px-4 py-2 rounded-full
     }
 }

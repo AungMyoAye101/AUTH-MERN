@@ -1,3 +1,4 @@
+
 export const loginData = [{
     type: 'email',
     name: "email",
@@ -30,6 +31,8 @@ export const signupData = [
         placeholder: "password"
     },
 ]
+
+
 
 // {
 //     type: 'password',
