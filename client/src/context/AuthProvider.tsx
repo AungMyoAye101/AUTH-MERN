@@ -10,6 +10,7 @@ type UserType = {
 }
 type AuthContextProp = UserType & {
     logout: () => void
+    fetchUser: () => void
 }
 const defaultUser: UserType = {
     id: '',
@@ -21,7 +22,8 @@ const defaultUser: UserType = {
 
 const userContext = createContext<AuthContextProp>({
     ...defaultUser,
-    logout: () => { }
+    logout: () => { },
+    fetchUser: () => { }
 }
 )
 const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -38,6 +40,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             })
             if (!res.ok) {
                 setUser(defaultUser)
+                return
             }
             const { user } = await res.json()
             console.log(user)
@@ -56,6 +59,37 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         fetchUser()
     }, [])
+
+    // const onSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     try {
+    //         setLoading(true)
+    //         const res = await fetch(base_url + endpoint, {
+    //             method,
+    //             headers: {
+    //                 "Content-type": "application/json"
+    //             },
+    //             body: JSON.stringify(data),
+    //             credentials: "include"
+
+    //         })
+    //         const resData = await res.json()
+    //         setLoading(false)
+    //         if (!res.ok || resData.success === false) {
+    //             showToast('error', resData.message)
+    //             setError(resData.message)
+    //             return
+    //         }
+    //         fetchUser()
+    //         showToast('success', resData.message)
+    //         navigate(redirect.startsWith('/') ? redirect : '/' + redirect)
+    //     } catch (error: any) {
+    //         setLoading(false)
+    //         showToast('error', error.message)
+    //         setError(error.message)
+    //     }
+    // }
+
 
 
     const logout = async () => {
@@ -80,8 +114,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+
+
     return (
-        <userContext.Provider value={{ id: user?.id, name: user?.name, email: user?.email, isVerified: user?.isVerified, logout }}>{children}</userContext.Provider>
+        <userContext.Provider value={{ id: user?.id, name: user?.name, email: user?.email, isVerified: user?.isVerified, logout, fetchUser }}>{children}</userContext.Provider>
     )
 }
 

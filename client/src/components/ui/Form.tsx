@@ -4,6 +4,7 @@ import Button from "./Button"
 import { showToast } from "../../context/ToastProvider"
 import { useNavigate } from "react-router-dom"
 import { base_url } from "../../pages/Signup"
+import { useAuth } from "../../context/AuthProvider"
 type FormPropsTypes = {
     endpoint: string,
     data: any,
@@ -17,6 +18,7 @@ type FormPropsTypes = {
 const Form = ({ children, method, endpoint, headingText, data, setError, redirect }: FormPropsTypes) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const { fetchUser } = useAuth()
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
@@ -37,6 +39,7 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
                 setError(resData.message)
                 return
             }
+            fetchUser()
             showToast('success', resData.message)
             navigate(redirect.startsWith('/') ? redirect : '/' + redirect)
         } catch (error: any) {
