@@ -190,7 +190,8 @@ const verifyEmail = async (req, res) => {
 
 const currentUser = async (req, res) => {
     try {
-        return res.status(200).json({ success: true, message: "User already login", id: req.id })
+        const user = await User.findById(req.id)
+        return res.status(200).json({ success: true, message: "User already login", user })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to check current user!" })
     }

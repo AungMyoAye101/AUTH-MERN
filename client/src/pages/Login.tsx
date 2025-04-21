@@ -23,7 +23,7 @@ const Login = () => {
     return (
         <section className='flex justify-center items-center  p-4'>
 
-            <Form headingText='Login' endpoint={'auth/login'} data={data} setError={setError} redirect='dashboard'>
+            <Form headingText='Login' method='POST' endpoint={'auth/login'} data={data} setError={setError} redirect='dashboard'>
                 {
                     loginData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={handleChange} style="bg-white" />))
                 }

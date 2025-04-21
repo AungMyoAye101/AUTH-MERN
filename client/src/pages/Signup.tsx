@@ -28,7 +28,7 @@ const Signup = () => {
     return (
         <section className='flex justify-center items-center  p-4'>
 
-            <Form headingText='Signup' endpoint={'auth/register'} data={data} setError={setError} redirect='/'>
+            <Form headingText='Signup' method='POST' endpoint={'auth/register'} data={data} setError={setError} redirect='/'>
                 {
                     signupData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={(e) => handleChange(e)} style="bg-white" />))
                 }

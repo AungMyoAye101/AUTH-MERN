@@ -10,10 +10,11 @@ type FormPropsTypes = {
     children: React.ReactNode,
     headingText: string,
     setError: any,
-    redirect: string
+    redirect: string,
+    method: "POST" | "PUT"
 }
 
-const Form = ({ children, endpoint, headingText, data, setError, redirect }: FormPropsTypes) => {
+const Form = ({ children, method, endpoint, headingText, data, setError, redirect }: FormPropsTypes) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const onSubmit = async (e: React.FormEvent) => {
@@ -21,7 +22,7 @@ const Form = ({ children, endpoint, headingText, data, setError, redirect }: For
         try {
             setLoading(true)
             const res = await fetch(base_url + endpoint, {
-                method: "POST",
+                method,
                 headers: {
                     "Content-type": "application/json"
                 },
