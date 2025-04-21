@@ -7,6 +7,7 @@ import OtpVerify from './pages/OtpVerify'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NavBar from './components/NavBar'
+import AccountVerify from './pages/AccountVerify'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/verify' element={<OtpVerify />} />
           <Route path='/user/:id' element={<Profile />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/account_verify' element={<AccountVerify />} />
         </Routes>
       </section>
     </BrowserRouter >

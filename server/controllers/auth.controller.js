@@ -33,7 +33,7 @@ const register = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: email,
             subject: "Welcome to Simple Auth.",
-            text: `Hello, Nice to meet you ${name}.Your account has been created. Thanks you choosing our website.`,
+            text: `Hello, Nice to meet you ${name}. Your account has been created. Thank you for choosing our website.`,
         }
         await transporter.sendMail(mailOptions)
 
@@ -151,6 +151,7 @@ const otpVerify = async (req, res) => {
 const verifyEmail = async (req, res) => {
     const id = req.id
     const { otp } = req.body
+    console.log(otp)
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: "Invalid user id!" })
@@ -177,7 +178,7 @@ const verifyEmail = async (req, res) => {
             to: user.email,
             subject: "Account Verify Notification",
             text: `<div><h1>Hello, ${user.name}</h1> <h2>Your account has been verified.</h2><p>Now,you can you use all features in our site</p>
-            <p><i>Thanks you</i> choosing our website.</p></div>`,
+            <p><i>Thank you for</i> choosing our website.</p></div>`,
         }
         await transporter.sendMail(mailOptions)
         return res.status(200).json({ success: true, message: "Your account has been verified!" })
