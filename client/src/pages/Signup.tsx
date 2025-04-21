@@ -29,7 +29,9 @@ const Signup = () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                credentials: "include"
+
             })
 
             const resData = await res.json()
@@ -38,8 +40,6 @@ const Signup = () => {
         } catch (error: any) {
             setLoading(false)
             setError(error.message)
-        } finally {
-            setLoading(false)
         }
     }
 
