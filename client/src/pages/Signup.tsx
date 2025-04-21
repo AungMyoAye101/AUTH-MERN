@@ -1,9 +1,10 @@
 
 import { signupData } from '../assets/lib/helper'
 import Form from '../components/ui/Form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import FormController from '../components/ui/FormController'
 import { useState } from 'react'
+
 
 export const base_url = import.meta.env.VITE_BASE_URL
 
@@ -15,6 +16,7 @@ const Signup = () => {
     })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -37,6 +39,7 @@ const Signup = () => {
             const resData = await res.json()
             console.log(resData)
             setLoading(false)
+            navigate('/')
         } catch (error: any) {
             setLoading(false)
             setError(error.message)

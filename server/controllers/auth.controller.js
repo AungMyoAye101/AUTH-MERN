@@ -71,7 +71,7 @@ const login = async (req, res) => {
             maxAge: 1 * 60 * 60 * 1000
         });
 
-        return res.status(200).json({ success: true, message: "success", user });
+        return res.status(200).json({ success: true, message: "Login successfull", user });
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
