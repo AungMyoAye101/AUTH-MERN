@@ -1,10 +1,24 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { base_url } from "../pages/Signup"
 
-const userContext = createContext(null)
+type AuthContextType = {
+    id: string,
+    name: string,
+    email: string,
+    isVerified: boolean
+}
+
+const defaultAuth: AuthContextType = {
+    id: '',
+    name: '',
+    email: '',
+    isVerified: false
+}
+
+
+const userContext = createContext<AuthContextType>(defaultAuth)
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState()
-    console.log(user)
+    const [user, setUser] = useState<AuthContextType>(defaultAuth)
     const fetchUser = async () => {
         try {
             const res = await fetch(base_url + 'auth/me', {
@@ -16,14 +30,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             })
             if (!res.ok) {
-                setUser(null)
+                setUser(defaultAuth)
             }
-            const resData = await res.json()
-            console.log(resData)
-            setUser(resData)
+            const { user } = await res.json()
+            console.log(user)
+            setUser({
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isVerified: user.isVerified
+            })
         } catch (error) {
             console.log(error)
-            setUser(null)
+            setUser(defaultAuth)
         }
     }
 
@@ -31,7 +50,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         fetchUser()
     }, [])
     return (
-        <userContext.Provider value={{ user }}>{children}</userContext.Provider>
+        <userContext.Provider value={user}>{children}</userContext.Provider>
     )
 }
 
