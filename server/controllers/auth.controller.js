@@ -123,7 +123,7 @@ const otpVerify = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" });
         }
-        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        const otp = Math.floor(100000 + Math.random() * 900000)
         const otpExpireIn = new Date(Date.now() + 5 * 60 * 1000)
 
         const mailOptions = {
@@ -167,6 +167,7 @@ const verifyEmail = async (req, res) => {
         if (Date.now() > user.otpExpireIn) {
             return res.status(400).json({ success: false, message: "Your OTP is expired!" })
         }
+        console.log(otp, typeof (otp), typeof (user.verifyOtp))
         if (otp !== user.verifyOtp) {
             return res.status(400).json({ success: false, message: "Your OTP is not correct!" })
         }
