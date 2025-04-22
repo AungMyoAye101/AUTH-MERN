@@ -198,6 +198,15 @@ const currentUser = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to check current user!" })
     }
 }
+
+const deleteAccount = async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.id)
+        return res.status(200).json({ success: true, message: "Account deleted!", })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to delete account!" })
+    }
+}
 module.exports = {
     register,
     login,
@@ -205,5 +214,5 @@ module.exports = {
     updateUser,
     otpVerify,
     verifyEmail,
-    currentUser
+    currentUser, deleteAccount
 };

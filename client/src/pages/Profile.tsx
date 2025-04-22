@@ -7,7 +7,7 @@ import { useState } from "react"
 
 
 const Profile = () => {
-    const { id, name, email, isVerified } = useAuth()
+    const { id, name, email, isVerified, fetchUser } = useAuth()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const deleteHandler = async () => {
@@ -17,7 +17,8 @@ const Profile = () => {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json"
-                }
+                },
+                credentials: 'include'
             })
             const resData = await res.json()
             if (!res.ok || resData.success === false) {
@@ -25,6 +26,7 @@ const Profile = () => {
                 showToast('error', resData.message)
                 return
             }
+            fetchUser()
             showToast('success', resData.message)
             setLoading(false)
             navigate('/')
