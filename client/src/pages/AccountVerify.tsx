@@ -7,6 +7,7 @@ import Button from '../components/ui/Button'
 
 
 
+
 const OTP_EXPIRES_IN = 5 * 60 // 5 minutes
 const RESEND_OTP = 60
 
@@ -18,6 +19,7 @@ const AccountVerify = () => {
     const [resendTimer, setResendTimer] = useState(RESEND_OTP)
     const [resend, setResend] = useState(false)
     const hasSentOTP = useRef(false)
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -45,6 +47,7 @@ const AccountVerify = () => {
             setResendTimer(RESEND_OTP)
             setResend(false)
             showToast("success", resData.message)
+            // navigate('/') // Redirect after OTP verification
 
         } catch (error: any) {
             showToast("error", error.message)

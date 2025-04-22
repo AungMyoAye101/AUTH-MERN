@@ -8,6 +8,6 @@ body {
 
 @layer base {
     .link_btn {
-        @apply text-blue-50 bg-blue-400 text-sm font-serif px-4 py-2 rounded-full
+        @apply text-white bg-blue-400 text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center
     }
 }

@@ -20,7 +20,7 @@ const NavBar = () => {
                             <Button onClick={logout} className="px-4 py-2 bg-blue-400 text-white  text-sm rounded-full ">Logout</Button>
                             <div className="relative">
 
-                                <Link to={`/profile/${id}`} className="cursor-pointer">  <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center text-xl font-semibold text-blue-50 ">
+                                <Link to={`/user/${id}`} className="cursor-pointer">  <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center text-xl font-semibold text-blue-50 ">
                                     {name[0]}
                                 </div></Link>
                                 {
