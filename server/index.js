@@ -4,12 +4,19 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db.js");
 const authRouter = require("./routes/auth.js");
-
-const app = express();
+const path = require("path");
 
 dotenv.config();
+const app = express();
+
 const port = process.env.PORT || 4000;
 connectDB();
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    });
+}
 
 
 app.use(express.json());
