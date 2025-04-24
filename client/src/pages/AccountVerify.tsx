@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Form from '../components/ui/Form'
 import FormController from '../components/ui/FormController'
-import { base_url } from './Signup'
 import { showToast } from '../context/ToastProvider'
 import Button from '../components/ui/Button'
+import { base_url } from '../lib/helper'
 
 
 
@@ -30,7 +30,7 @@ const AccountVerify = () => {
     const otpSender = async () => {
         console.log('otp sending...')
         try {
-            const res = await fetch(base_url + 'auth/verify', {
+            const res = await fetch(base_url + '/auth/verify', {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"

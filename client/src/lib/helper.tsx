@@ -32,7 +32,7 @@ export const signupData = [
     },
 ]
 
-
+export const base_url = import.meta.env.VITE_BASE_URL + '/api/v1'
 
 // {
 //     type: 'password',

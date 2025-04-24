@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom"
 import Button from "../components/ui/Button"
 import { useAuth } from "../context/AuthProvider"
 import { showToast } from "../context/ToastProvider"
-import { base_url } from "./Signup"
 import { useState } from "react"
+import { base_url } from "../lib/helper"
 
 
 const Profile = () => {
@@ -13,7 +13,7 @@ const Profile = () => {
     const deleteHandler = async () => {
         setLoading(true)
         try {
-            const res = await fetch(base_url + 'auth/delete_account', {
+            const res = await fetch(base_url + '/auth/delete_account', {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json"

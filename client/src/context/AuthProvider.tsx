@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
-import { base_url } from "../pages/Signup"
+
 import { showToast } from "./ToastProvider"
+import { base_url } from "../lib/helper"
 
 type UserType = {
     id: string | undefined,
@@ -28,9 +29,10 @@ const userContext = createContext<AuthContextProp>({
 )
 const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserType>(defaultUser)
+
     const fetchUser = async () => {
         try {
-            const res = await fetch(base_url + 'auth/me', {
+            const res = await fetch(base_url + '/auth/me', {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
@@ -94,7 +96,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = async () => {
         try {
-            const res = await fetch(base_url + 'auth/logout', {
+            const res = await fetch(base_url + '/auth/logout', {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"

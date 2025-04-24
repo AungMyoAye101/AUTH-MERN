@@ -3,8 +3,8 @@ import React, { useState } from "react"
 import Button from "./Button"
 import { showToast } from "../../context/ToastProvider"
 import { useNavigate } from "react-router-dom"
-import { base_url } from "../../pages/Signup"
 import { useAuth } from "../../context/AuthProvider"
+import { base_url } from "../../lib/helper"
 type FormPropsTypes = {
     endpoint: string,
     data: any,
