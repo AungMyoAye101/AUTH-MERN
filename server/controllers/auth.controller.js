@@ -167,7 +167,7 @@ const verifyEmail = async (req, res) => {
         if (Date.now() > user.otpExpireIn) {
             return res.status(400).json({ success: false, message: "Your OTP is expired!" })
         }
-        console.log(otp, typeof (otp), typeof (user.verifyOtp))
+
         if (otp !== user.verifyOtp) {
             return res.status(400).json({ success: false, message: "Your OTP is not correct!" })
         }
@@ -207,6 +207,75 @@ const deleteAccount = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to delete account!" })
     }
 }
+
+//Forgot password 
+
+const forgotPassword = async (req, res) => {
+    const { email } = req.body
+    if (!email) {
+        return res.status(400).json({ success: false, message: "email is required!" })
+    }
+    try {
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!" })
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000)
+        const otpExpireIn = new Date(Date.now() + 5 * 60 * 1000)
+
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: user.email,
+            subject: "Account Recovery",
+            text: `<div><h1>Hello, ${user.name}</h1> <h2>Your OTP is <b>${otp}</b> expires in 5 minutes.</h2><p>Don't share anyone.</p>
+            <p><i>Thank you for</i> choosing our website.</p></div>`,
+        }
+        user.verifyOtp = otp;
+        user.otpExpireIn = otpExpireIn;
+        await user.save()
+        await transporter.sendMail(mailOptions)
+
+
+        return res.status(200).json({ success: true, message: "Password reset OTP is sent!", userId: user._id })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to reset password account!" })
+    }
+}
+
+const verifyOTP = async (req, res) => {
+    const { otp, userId } = req.body
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!" })
+        }
+        if (otp !== user.verifyOtp) {
+            return res.status(400).json({ success: false, message: "Your OTP is not correct!" })
+        }
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1 * 60 * 60 * 1000
+        });
+        return res.status(200).json({ success: true, message: "Verify OTP success" })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to verify OTP!" })
+    }
+}
+
+const passwordReset = async (req, res) => {
+    const { password, userId } = req.body
+
+    try {
+        const hashed = await bcrypt.hash(password, 10)
+        const user = await User.findByIdAndUpdate(userId, { password: hashed }, { new: true })
+        return res.status(200).json({ success: true, message: "New password already set", user })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to reset password" })
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -214,5 +283,5 @@ module.exports = {
     updateUser,
     otpVerify,
     verifyEmail,
-    currentUser, deleteAccount
+    currentUser, deleteAccount, forgotPassword, verifyOTP, passwordReset
 };
