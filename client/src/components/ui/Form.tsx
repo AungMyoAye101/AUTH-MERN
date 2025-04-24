@@ -12,10 +12,11 @@ type FormPropsTypes = {
     headingText: string,
     setError: any,
     redirect: string,
-    method: "POST" | "PUT"
+    method: "POST" | "PUT",
+    error: string
 }
 
-const Form = ({ children, method, endpoint, headingText, data, setError, redirect }: FormPropsTypes) => {
+const Form = ({ children, method, endpoint, headingText, data, setError, redirect, error }: FormPropsTypes) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { fetchUser } = useAuth()
@@ -53,7 +54,14 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
         <form onSubmit={onSubmit} className="min-w-lg w-96 max-w-xl bg-white px-4 py-6 rounded-lg shadow-md border flex flex-col gap-3">
             <h1 className="text-xl md:text-2xl font-semibold text-center font-serif">{headingText}</h1>
             {children}
-            <Button type="submit" className="bg-blue-200 h-10 flex items-center justify-center">{loading ? spinner : 'submit'}</Button>
+            <Button type="submit" className="bg-blue-200 text-white h-10 flex items-center justify-center">{loading ? spinner : 'Submit'}</Button>
+
+            {
+
+
+                error && <p className="bg-red-400 text-sm font-serif p-2 rounded-full text-center text-white">{error}</p>
+
+            }
         </form>
     )
 }

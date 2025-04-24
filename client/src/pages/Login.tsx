@@ -23,7 +23,7 @@ const Login = () => {
     return (
         <section className='flex justify-center items-center  p-4'>
 
-            <Form headingText='Login' method='POST' endpoint={'/auth/login'} data={data} setError={setError} redirect='/'>
+            <Form headingText='Login' method='POST' endpoint={'/auth/login'} data={data} setError={setError} redirect='/' error={error}>
                 {
                     loginData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={handleChange} style="bg-white" />))
                 }
@@ -31,9 +31,7 @@ const Login = () => {
                     <Link to={'/'} className='link_text'>Forgot password?</Link>
                     <Link to={'/signup'} className='link_text'>Sign up</Link>
                 </div>
-                {
-                    error && <div className='text-red-400'>{error}</div>
-                }
+
             </Form>
         </section>
     )

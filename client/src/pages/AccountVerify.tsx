@@ -4,6 +4,7 @@ import FormController from '../components/ui/FormController'
 import { showToast } from '../context/ToastProvider'
 import Button from '../components/ui/Button'
 import { base_url } from '../lib/helper'
+import { useAuth } from '../context/AuthProvider'
 
 
 
@@ -13,12 +14,13 @@ const RESEND_OTP = 60
 
 const AccountVerify = () => {
     const [data, setData] = useState({ otp: '' })
-    const [error, setError] = useState()
-
+    const [error, setError] = useState('')
     const [otpTimer, setOtpTimer] = useState(OTP_EXPIRES_IN)
     const [resendTimer, setResendTimer] = useState(RESEND_OTP)
     const [resend, setResend] = useState(false)
     const hasSentOTP = useRef(false)
+
+    const { email } = useAuth()
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +31,8 @@ const AccountVerify = () => {
     // request OTP from server
     const otpSender = async () => {
         console.log('otp sending...')
+        setOtpTimer(OTP_EXPIRES_IN)
+        setResendTimer(RESEND_OTP)
         try {
             const res = await fetch(base_url + '/auth/verify', {
                 method: "POST",
@@ -43,8 +47,7 @@ const AccountVerify = () => {
                 console.error(resData.message)
                 return
             }
-            setOtpTimer(OTP_EXPIRES_IN)
-            setResendTimer(RESEND_OTP)
+
             setResend(false)
             showToast("success", resData.message)
             // navigate('/') // Redirect after OTP verification
@@ -101,15 +104,12 @@ const AccountVerify = () => {
 
     return (
         <section className='flex justify-center'>
-            <Form headingText='Account Verification' endpoint='auth/verify_account' method='POST' data={data} setError={setError} redirect={'/'}>
-                <h2 className=' font-serif text-center'>We have sent the OTP code to your email.</h2>
+            <Form headingText='Account Verification' endpoint='/auth/verify_account' method='POST' data={data} setError={setError} redirect={'/'} error={error}>
+                <h2 className=' font-serif text-center'>We have sent  OTP code to <span className='text-sm'>{email}</span>.</h2>
                 <div className='text-sm font-medium text-neutral-600'> OTP expires in <span className='font-medium'>{formatTime(otpTimer)}</span></div>
                 <FormController data={data.otp} type='number' name='otp' id='otp' onChange={handleChange} placeholder='Please enter OTP code' />
-                <div className='flex justify-between items-center '><div className='text-sm font-medium text-neutral-600'>Didn't get the code</div><Button loading={!resend} onClick={otpSender} className={`bg-orange-400 font-sans w-20 h-8 text-sm ${!resend ? "cursor-wait" : ''}`}>{resend ? "Resend" : resendTimer}</Button>  </div>
+                <div className='flex justify-between items-center '><div className='text-sm font-medium text-neutral-600'>Didn't get the code</div><Button loading={!resend} onClick={otpSender} className={`bg-orange-400 flex justify-center items-center font-sans w-20 h-8 text-sm ${!resend ? "cursor-wait" : ''}`}>{resend ? "Resend" : resendTimer}</Button>  </div>
 
-                {
-                    error && <div className='text-red-400 text-sm'>{error}</div>
-                }
 
 
 
