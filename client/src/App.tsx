@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NavBar from './components/NavBar'
 import AccountVerify from './pages/AccountVerify'
+import PublicRoutes from './ProtectRoutes/PublicRoutes'
+import ProtectedRoutes from './ProtectRoutes/ProtectedRoutes'
 
 function App() {
 
@@ -18,11 +20,11 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/user/:id' element={<Profile />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/account_verify' element={<AccountVerify />} />
+          <Route path='/login' element={<PublicRoutes><Login /></PublicRoutes>} />
+          <Route path='/signup' element={<PublicRoutes><Signup /></PublicRoutes>} />
+          <Route path='/user/:id' element={<ProtectedRoutes><Profile /></ProtectedRoutes>} />
+          <Route path='/dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
+          <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
         </Routes>
       </section>
     </BrowserRouter >

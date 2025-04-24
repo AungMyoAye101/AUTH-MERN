@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { showToast } from "./ToastProvider"
 import { base_url } from "../lib/helper"
 
+
 type UserType = {
     id: string | undefined,
     name: string,
@@ -110,6 +111,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             }
             setUser(defaultUser)
             showToast("success", data.message)
+
         } catch (error: any) {
             showToast("error", error.message)
             console.log(error)

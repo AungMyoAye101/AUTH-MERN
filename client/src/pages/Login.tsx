@@ -25,10 +25,10 @@ const Login = () => {
 
             <Form headingText='Login' method='POST' endpoint={'/auth/login'} data={data} setError={setError} redirect='/' error={error}>
                 {
-                    loginData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={handleChange} style="bg-white" />))
+                    loginData.map((field, i) => (<FormController key={i} type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} onChange={handleChange} style="bg-white" />))
                 }
                 <div className='flex justify-between items-center gap-2 text-sm'>
-                    <Link to={'/'} className='link_text'>Forgot password?</Link>
+                    <Link to={'/forgot-password'} className='link_text'>Forgot password?</Link>
                     <Link to={'/signup'} className='link_text'>Sign up</Link>
                 </div>
 
