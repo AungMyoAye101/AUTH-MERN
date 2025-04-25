@@ -9,6 +9,9 @@ import NavBar from './components/NavBar'
 import AccountVerify from './pages/AccountVerify'
 import PublicRoutes from './ProtectRoutes/PublicRoutes'
 import ProtectedRoutes from './ProtectRoutes/ProtectedRoutes'
+import ForgotPassword from './pages/ForgotPassword'
+import FindAccount from './pages/FindAccount'
+import FindAccVerify from './pages/FindAccVerify'
 
 function App() {
 
@@ -25,6 +28,9 @@ function App() {
           <Route path='/user/:id' element={<ProtectedRoutes><Profile /></ProtectedRoutes>} />
           <Route path='/dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
+          <Route path='/find_account' element={<FindAccount />} />
+          <Route path='/find_account/:id' element={<FindAccVerify />} />
+          <Route path='/forgot_password' element={<ForgotPassword />} />
         </Routes>
       </section>
     </BrowserRouter >

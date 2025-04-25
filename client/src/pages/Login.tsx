@@ -28,7 +28,7 @@ const Login = () => {
                     loginData.map((field, i) => (<FormController key={i} type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} onChange={handleChange} style="bg-white" />))
                 }
                 <div className='flex justify-between items-center gap-2 text-sm'>
-                    <Link to={'/forgot-password'} className='link_text'>Forgot password?</Link>
+                    <Link to={'/find_account'} className='link_text'>Forgot password?</Link>
                     <Link to={'/signup'} className='link_text'>Sign up</Link>
                 </div>
 

@@ -113,7 +113,7 @@ const updateUser = async (req, res) => {
 }
 
 //send OTP code to user 
-const otpVerify = async (req, res) => {
+const sendOTP = async (req, res) => {
     const id = req.id;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: "User id is not valid!" });
@@ -151,8 +151,6 @@ const otpVerify = async (req, res) => {
 const verifyEmail = async (req, res) => {
     const id = req.id
     const { otp } = req.body
-    console.log(otp)
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ success: false, message: "Invalid user id!" })
     }
@@ -210,8 +208,9 @@ const deleteAccount = async (req, res) => {
 
 //Forgot password 
 
-const forgotPassword = async (req, res) => {
+const findAccoundSendOTP = async (req, res) => {
     const { email } = req.body
+    console.log(email)
     if (!email) {
         return res.status(400).json({ success: false, message: "email is required!" })
     }
@@ -234,8 +233,6 @@ const forgotPassword = async (req, res) => {
         user.otpExpireIn = otpExpireIn;
         await user.save()
         await transporter.sendMail(mailOptions)
-
-
         return res.status(200).json({ success: true, message: "Password reset OTP is sent!", userId: user._id })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to reset password account!" })
@@ -244,8 +241,9 @@ const forgotPassword = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
     const { otp, userId } = req.body
+    console.log(userId)
     try {
-        const user = await User.findById(userId)
+        const user = await User.findOne({ _id: userId })
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" })
         }
@@ -281,7 +279,11 @@ module.exports = {
     login,
     logout,
     updateUser,
-    otpVerify,
+    sendOTP,
     verifyEmail,
-    currentUser, deleteAccount, forgotPassword, verifyOTP, passwordReset
+    currentUser,
+    deleteAccount,
+    findAccoundSendOTP
+    , verifyOTP,
+    passwordReset
 };
