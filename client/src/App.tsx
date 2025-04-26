@@ -29,7 +29,7 @@ function App() {
           <Route path='/dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
           <Route path='/find_account' element={<FindAccount />} />
-          <Route path='/find_account/:id' element={<FindAccVerify />} />
+          <Route path='/otp_verify' element={<FindAccVerify />} />
           <Route path='/forgot_password' element={<ForgotPassword />} />
         </Routes>
       </section>

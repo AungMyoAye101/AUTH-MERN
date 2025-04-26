@@ -241,7 +241,7 @@ const findAccoundSendOTP = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
     const { otp, userId } = req.body
-    console.log(userId)
+    console.log(userId, otp)
     try {
         const user = await User.findOne({ _id: userId })
         if (!user) {
