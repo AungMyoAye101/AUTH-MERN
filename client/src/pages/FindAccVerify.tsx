@@ -1,19 +1,18 @@
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Form from '../components/ui/Form'
 import FormController from '../components/ui/FormController'
-import { showToast } from '../context/ToastProvider'
-import Button from '../components/ui/Button'
-import { base_url } from '../lib/helper'
-import { useAuth } from '../context/AuthProvider'
+// import Button from '../components/ui/Button'
+// import { base_url } from '../lib/helper'
+// import { useAuth } from '../context/AuthProvider'
 import { useSearchParams } from 'react-router-dom'
 
 
 
 
 
-const OTP_EXPIRES_IN = 5 * 60 // 5 minutes
-const RESEND_OTP = 60
+// const OTP_EXPIRES_IN = 5 * 60 // 5 minutes
+// const RESEND_OTP = 60
 
 const FindAccVerify = () => {
     const [searchParams] = useSearchParams()

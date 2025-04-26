@@ -9,9 +9,9 @@ import NavBar from './components/NavBar'
 import AccountVerify from './pages/AccountVerify'
 import PublicRoutes from './ProtectRoutes/PublicRoutes'
 import ProtectedRoutes from './ProtectRoutes/ProtectedRoutes'
-import ForgotPassword from './pages/ForgotPassword'
 import FindAccount from './pages/FindAccount'
 import FindAccVerify from './pages/FindAccVerify'
+import ResetPassword from './pages/ResetPasswors'
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
           <Route path='/find_account' element={<FindAccount />} />
           <Route path='/otp_verify' element={<FindAccVerify />} />
-          <Route path='/forgot_password' element={<ForgotPassword />} />
+          <Route path='/reset_password' element={<ResetPassword />} />
         </Routes>
       </section>
     </BrowserRouter >

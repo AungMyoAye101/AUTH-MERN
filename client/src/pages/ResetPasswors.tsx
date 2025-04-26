@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Form from '../components/ui/Form'
 import FormController from '../components/ui/FormController'
+import { useAuth } from '../context/AuthProvider'
 
-const ForgotPassword = () => {
-    const [data, setdata] = useState({ password: '' })
+const ResetPassword = () => {
+    const { id } = useAuth()
+    const [data, setdata] = useState({ password: '', id })
     const [error, setError] = useState('')
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -13,11 +15,11 @@ const ForgotPassword = () => {
 
     return (
         <section>
-            <Form headingText='Find Your account' endpoint='/auth/find_account' redirect='/account_verify' method='POST' data={data} error={error} setError={setError} >
+            <Form headingText='Add new password' endpoint='/auth/reset_password' redirect='/' method='POST' data={data} error={error} setError={setError} >
                 <FormController onChange={onChange} type='password' placeholder='password' name='password' id='password' />
             </Form>
         </section>
     )
 }
 
-export default ForgotPassword
+export default ResetPassword

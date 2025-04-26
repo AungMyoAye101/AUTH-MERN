@@ -263,11 +263,11 @@ const verifyOTP = async (req, res) => {
 }
 
 const passwordReset = async (req, res) => {
-    const { password, userId } = req.body
+    const { password, id } = req.body
 
     try {
         const hashed = await bcrypt.hash(password, 10)
-        const user = await User.findByIdAndUpdate(userId, { password: hashed }, { new: true })
+        const user = await User.findByIdAndUpdate(id, { password: hashed }, { new: true })
         return res.status(200).json({ success: true, message: "New password already set", user })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to reset password" })
