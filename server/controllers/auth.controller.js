@@ -265,6 +265,8 @@ const verifyOTP = async (req, res) => {
 const passwordReset = async (req, res) => {
     const { password, id } = req.body
 
+    console.log(password, id)
+
     try {
         const hashed = await bcrypt.hash(password, 10)
         const user = await User.findByIdAndUpdate(id, { password: hashed }, { new: true })
@@ -283,7 +285,7 @@ module.exports = {
     verifyEmail,
     currentUser,
     deleteAccount,
-    findAccoundSendOTP
-    , verifyOTP,
+    findAccoundSendOTP,
+    verifyOTP,
     passwordReset
 };
