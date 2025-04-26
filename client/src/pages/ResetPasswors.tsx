@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthProvider'
 
 const ResetPassword = () => {
     const { id } = useAuth()
-    const [data, setdata] = useState({ password: '', id: id })
+    const [data, setdata] = useState({ password: '', id })
     console.log(data)
     const [error, setError] = useState('')
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

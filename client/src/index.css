@@ -10,4 +10,8 @@ body {
     .link_btn {
         @apply text-white bg-blue-400 text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center
     }
+
+    .link_text {
+        @apply text-neutral-700 hover:text-purple-400 font-sans text-sm
+    }
 }
