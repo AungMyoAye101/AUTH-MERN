@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #f7f7f7;
-}
 
 @layer base {
+    body {
+        @apply bg-gradient-to-br from-sky-100 via-sky-200 to-violet-50 m-0
+    }
+
     .link_btn {
         @apply text-white bg-blue-400 text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center
     }

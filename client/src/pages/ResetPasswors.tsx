@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthProvider'
 const ResetPassword = () => {
     const { id } = useAuth()
     const [data, setdata] = useState({ password: '', id })
-    console.log(data)
+    // console.log(data, "otp sending....") // Removed for production
     const [error, setError] = useState('')
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
