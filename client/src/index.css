@@ -8,6 +8,10 @@
         @apply bg-gradient-to-br from-sky-50 via-sky-100 to-violet-50 m-0 p-0 relative box-border
     }
 
+    .container {
+        @apply h-[calc(100vh-64px)] flex justify-center items-center
+    }
+
     .link_btn {
         @apply text-white bg-blue-400 text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center
     }
@@ -17,6 +21,6 @@
     }
 
     .link_text {
-        @apply text-neutral-700 hover:text-purple-400 font-sans text-sm
+        @apply text-neutral-700 hover:text-purple-500 font-serif text-sm
     }
 }

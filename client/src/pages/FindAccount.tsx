@@ -42,13 +42,14 @@ const FindAccount = () => {
     }
 
     return (
-        <section className='flex justify-center '>
+        <section className='container '>
             <form onSubmit={findAccount} className='min-w-lg w-96 max-w-xl bg-white px-4 py-6 rounded-lg shadow-md border flex flex-col gap-3'>
                 <h1 className='text-lg font-semibold text-center'>Find your account</h1>
+                <h2 className="text-base md:text-lg font-medium font-serif text-center text-neutral-700">Please enter your email address</h2>
                 <input type="email" name='email' value={email} onChange={(e) => (setEmail(e.target.value))} className='py-1.5 px-4 w-full border focus:outline-none bg-gray-50 rounded-lg ' placeholder='your@gmail.com' />
-                <Button type="submit" loading={loading} >Find</Button>
+                <Button type="submit" loading={loading} className='text-base ' >Find account</Button>
                 {
-                    error && <p className='bg-red-400 p-2 text-sm text-white'>{error}</p>
+                    error && <p className='bg-red-400 p-2 text-sm text-white rounded-full flex justify-center items-center'>{error}</p>
                 }
             </form>
 

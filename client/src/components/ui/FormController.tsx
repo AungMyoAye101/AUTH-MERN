@@ -6,14 +6,18 @@ type InputType = {
     id: string,
     placeholder: string,
     style?: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    icon?: any
 
 }
 
-const FormController = ({ data, disable, type = 'text', name, id, placeholder, onChange, style }: InputType) => {
+const FormController = ({ data, disable, type = 'text', name, id, placeholder, onChange, style, icon }: InputType) => {
     return (
-        <label htmlFor={id}>
-            <input value={data} disabled={disable ? true : false} type={type} name={name} id={id} onChange={onChange} placeholder={placeholder} className={`h-10 px-4 w-full border focus:outline-none bg-gray-100 rounded-lg ${style}`} />
+        <label htmlFor={id} className={`h-10 w-full flex items-center  bg-neutral-200 rounded-lg text-sm overflow-hidden ${style}`}>
+            {
+                icon && <span>{icon}</span>
+            }
+            <input value={data} disabled={disable ? true : false} type={type} name={name} id={id} onChange={onChange} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
         </label>
     )
 }
