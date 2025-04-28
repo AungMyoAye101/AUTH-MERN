@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      <section className='max-w-6xl mx-auto p-4'>
+      <section className='max-w-6xl mx-auto px-4'>
         <Routes>
 
           <Route path='/' element={<Home />} />

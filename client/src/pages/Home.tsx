@@ -5,7 +5,7 @@ import img from '../assets/welcome.svg'
 const Home = () => {
     const { name } = useAuth()
     return (
-        <div className='h-[calc(100vh-100px)] flex justify-center items-center  '>
+        <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center'>
 
 
 
@@ -19,7 +19,7 @@ const Home = () => {
 
 
                     {
-                        name ? <Link to={'/dashboard'} className="border border-orange-400 bg-transparent ">Dashboard</Link> : <Link to={'/signup'} className="border-2 border-blue-400 bg-transparent px-4 py-2 rounded-full text-xs  md:text-sm font-serif hover:bg-blue-400 hover:text-white transition-all duration-100 ease-in-out">Register now</Link>
+                        name ? <Link to={'/dashboard'} className="border_btn">Dashboard</Link> : <Link to={'/signup'} className="border_btn">Register now</Link>
                     }
                 </div>
 

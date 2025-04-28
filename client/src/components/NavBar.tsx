@@ -7,7 +7,7 @@ import Button from "./ui/Button"
 const NavBar = () => {
     const { id, isVerified, logout, name } = useAuth()
     return (
-        <header className="bg-white shadow-md sticky top-0 left-0 right-0 z-50 h-16">
+        <header className=" sticky top-0 left-0 right-0 z-50 h-16 ">
             <nav className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
                 <Link to={'/'}>
                     <h1 className="text-2xl font-bold text-blue-400 font-serif">Simple <span className="text-gray-700 -ml-1">auth</span> </h1>
@@ -16,8 +16,8 @@ const NavBar = () => {
                 <div className="flex items-center  gap-2 text-sm">
                     {id ?
                         <>
-                            <Link to={'/dashboard'} className="px-4 py-2 bg-blue-400 text-white  text-sm rounded-full ">Dashboard</Link>
-                            <Button onClick={logout} className="px-4 py-2 bg-blue-400 text-white  text-sm rounded-full ">Logout</Button>
+                            <Link to={'/dashboard'} className="border_btn ">Dashboard</Link>
+                            <Button onClick={logout} className="border_btn">Logout</Button>
                             <div className="relative">
 
                                 <Link to={`/user/${id}`} className="cursor-pointer">  <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center text-xl font-semibold text-blue-50 ">
@@ -30,8 +30,8 @@ const NavBar = () => {
                             </div>
                         </>
                         : <>
-                            <Link to={'/login'} className="px-4 py-2 bg-blue-400 text-white  text-sm rounded-full ">Login</Link>
-                            <Link to={'/signup'} className="px-4 py-2 bg-blue-400 text-white  text-sm rounded-full ">Signup</Link>
+                            <Link to={'/login'} className="link_btn ">Login</Link>
+                            <Link to={'/signup'} className="link_btn">Signup</Link>
                         </>
 
                     }

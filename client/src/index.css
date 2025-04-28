@@ -5,11 +5,15 @@
 
 @layer base {
     body {
-        @apply bg-gradient-to-br from-sky-100 via-sky-200 to-violet-50 m-0
+        @apply bg-gradient-to-br from-sky-50 via-sky-100 to-violet-50 m-0 p-0 relative box-border
     }
 
     .link_btn {
         @apply text-white bg-blue-400 text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center
+    }
+
+    .border_btn {
+        @apply border-2 border-orange-400 bg-transparent px-4 py-2 rounded-full text-xs md:text-sm font-serif hover:bg-orange-400 hover:text-white transition-all duration-100 ease-in-out
     }
 
     .link_text {
