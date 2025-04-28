@@ -10,7 +10,8 @@ const NavBar = () => {
         <header className=" sticky top-0 left-0 right-0 z-50 h-16 ">
             <nav className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
                 <Link to={'/'}>
-                    <h1 className="text-2xl font-bold text-blue-400 font-serif">Simple <span className="text-gray-700 -ml-1">auth</span> </h1>
+                    <h1 className="text-2xl text-blue-400 md:hidden font-serif font-bold">S<span className="text-neutral-700">A</span></h1>
+                    <h1 className="text-2xl font-bold text-blue-400 font-serif hidden md:block">Simple <span className="text-neutral-800 -ml-1">auth</span> </h1>
                 </Link>
 
                 <div className="flex items-center  gap-2 text-sm">
