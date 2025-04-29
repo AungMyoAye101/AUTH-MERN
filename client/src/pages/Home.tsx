@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthProvider"
 const Home = () => {
     const { name } = useAuth()
     return (
-        <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center'>
+        <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center '>
 
 
 
