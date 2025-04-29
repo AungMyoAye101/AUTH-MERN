@@ -1,5 +1,4 @@
-import eye from '../../assets/eye.svg';
-import eyeslash from '../../assets/eye-slash.svg'
+
 import { useState } from 'react';
 
 type InputType = {
@@ -11,7 +10,7 @@ type InputType = {
     placeholder: string,
     style?: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    icon?: any
+    icon?: string
 
 }
 
@@ -25,16 +24,16 @@ const FormController = ({ data, disable, type = 'text', name, id, placeholder, o
         }
     }
 
+
     return (
         <label htmlFor={id} className={`h-10 w-full flex items-center px-2 bg-neutral-200 rounded-lg text-sm overflow-hidden ${style}`}>
-            {
-                icon && <span>{icon}</span>
-            }
+            <img src={icon} alt="icon" className='w-5' />
+
             <input value={data} disabled={disable ? true : false} type={inputType} name={name} id={id} onChange={onChange} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
             {
                 type === 'password' && (<>
 
-                    <img src={show ? eye : eyeslash} alt="eye icon" className='w-5' onClick={() => setshow(pre => !pre)} />
+                    <img src={show ? "/assets/eye.svg" : "/assets/eye-slash.svg"} alt="eye icon" className='w-5' onClick={() => setshow(pre => !pre)} />
 
 
                 </>)}

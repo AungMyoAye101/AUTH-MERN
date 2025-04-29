@@ -31,7 +31,7 @@ const Signup = () => {
             <Form headingText='Signup' method='POST' endpoint={'/auth/register'} data={data} setError={setError} redirect='/' error={error}>
                 <h2 className="text-base md:text-lg font-medium font-serif text-center text-neutral-700">Please create an account</h2>
                 {
-                    signupData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={(e) => handleChange(e)} />))
+                    signupData.map((data, i) => (<FormController key={i} type={data.type} name={data.name} id={data.name} placeholder={data.placeholder} onChange={(e) => handleChange(e)} icon={data.icon} />))
                 }
                 <div className='flex justify-between items-center gap-2 '>
                     <p className='link_text'>Already have an account</p>
