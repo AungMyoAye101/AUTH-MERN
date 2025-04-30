@@ -1,10 +1,17 @@
 const express = require("express")
 const { login, logout, register, updateUser, verifyEmail, currentUser, deleteAccount, forgotPassword, verifyOTP, sendOTP, findAccoundSendOTP, passwordReset } = require("../controllers/auth.controller.js")
 const userVerify = require("../middleware/auth.middleware.js")
-
+const { body } = require("express-validator")
 const authRouter = express.Router()
-authRouter.post('/register', register)
-authRouter.post("/login", login)
+authRouter.post('/register', [
+    body('name').notEmpty().withMessage("Name is required"),
+    body("email").isEmail().withMessage("Invalid email"),
+    body("password").isLength({ min: 6 }).withMessage("Password at least 6 characters long.")
+], register)
+authRouter.post("/login", [
+    body("email").isEmail().withMessage("Invalid email"),
+    body("password").isLength({ min: 6 }).withMessage("Password at least 6 characters long")
+], login)
 authRouter.post('/logout', logout)
 authRouter.put('/update/:id', updateUser)
 authRouter.post('/verify', userVerify, sendOTP)

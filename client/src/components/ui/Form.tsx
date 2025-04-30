@@ -34,6 +34,7 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
 
             })
             const resData = await res.json()
+            console.log(resData)
             setLoading(false)
             if (!res.ok || resData.success === false) {
                 showToast('error', resData.message)

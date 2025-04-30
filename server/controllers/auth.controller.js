@@ -3,13 +3,16 @@ const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
 const { mongoose } = require("mongoose");
 const transporter = require("../config/nodemailer.js");
+const { validationResult } = require("express-validator")
 
 const register = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
-        return res.status(400).json({ success: false, message: "All fields are required!" });
-    }
+
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
