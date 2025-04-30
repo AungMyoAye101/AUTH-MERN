@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
 
 const Home = () => {
-    const { name } = useAuth()
+    const { name, id } = useAuth()
     return (
         <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center '>
 
@@ -20,7 +20,7 @@ const Home = () => {
 
 
                     {
-                        name ? <Link to={'/dashboard'} className="border_btn">Dashboard</Link> : <Link to={'/signup'} className="border_btn flex items-center justify-center">Register now </Link>
+                        name ? <Link to={`/user/${id}`} className="link_btn bg-orange-400">Go to profile</Link> : <Link to={'/signup'} className="border_btn flex items-center justify-center">Register now </Link>
                     }
                 </div>
 

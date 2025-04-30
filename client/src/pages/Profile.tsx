@@ -37,7 +37,7 @@ const Profile = () => {
         }
     }
     return (
-        <section>
+        <section className="h-screen mt-10">
             <div className="p-4 bg-white shadow-md rounded-lg flex justify-between items-center" >
 
                 <div className="flex gap-4 items-center">

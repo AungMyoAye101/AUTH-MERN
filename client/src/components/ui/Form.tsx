@@ -40,11 +40,13 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
                 const errorMessage = Array.isArray(resData.message) ? resData.message[0]?.msg : resData.message;
                 showToast('error', errorMessage);
                 setError(errorMessage);
+                setLoading(false)
                 return
             }
             fetchUser()
             showToast('success', resData.message)
             navigate(redirect.startsWith('/') ? redirect : '/' + redirect)
+
         } catch (error: any) {
             setLoading(false)
             showToast('error', error.message)

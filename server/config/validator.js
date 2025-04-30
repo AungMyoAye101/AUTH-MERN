@@ -10,7 +10,7 @@ const loginSchema = [
     body("password").notEmpty().withMessage("Password is required").isLength({ min: 6 }).withMessage("Password at least 6 characters long").matches(/[A_Z]/).withMessage("Password must contain one uppercase letter").matches(/[\d]/).withMessage("Password must contain one number")
 ]
 const otpSchema = [
-    body('otp').notEmpty().withMessage("OTP is required").isLength({ min: 1, max: 4 }.withMessage("Invalid OTP"))
+    body('otp').notEmpty().withMessage("OTP is required").isLength({ min: 6, max: 6 }).withMessage("OTP must be exactly 6 characters long").matches(/^\d{6}$/).withMessage("OTP must contain only numeric characters")
 ]
 
 module.exports = { registerSchema, loginSchema, otpSchema }

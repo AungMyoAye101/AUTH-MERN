@@ -249,7 +249,7 @@ const findAccountSendOTP = async (req, res) => {
 const verifyOTP = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.status().json({ success: false, message: errors.array() })
+        return res.status(400).json({ success: false, message: errors.array() })
     }
     const { otp, userId } = req.body
     console.log(userId, otp)

@@ -37,6 +37,21 @@ export const signupData = [
     },
 ]
 
+export const updateUser = [{
+    type: 'name',
+    name: "name",
+    id: "name",
+    placeholder: "Your name",
+    icon: "/assets/avatar.svg"
+}, {
+    type: 'email',
+    name: "email",
+    id: "email",
+    placeholder: "example@gmail.com",
+    icon: "/assets/mail.svg"
+},
+]
+
 export const base_url = import.meta.env.VITE_BASE_URL + '/api/v1'
 
 // {
