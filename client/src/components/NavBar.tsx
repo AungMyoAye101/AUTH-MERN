@@ -17,15 +17,15 @@ const NavBar = () => {
                 <div className="flex items-center  gap-2 text-sm">
                     {id ?
                         <>
-                            <Link to={'/dashboard'} className="border_btn ">Dashboard</Link>
-                            <Button onClick={logout} className="border_btn">Logout</Button>
+
+                            <Button onClick={logout} className="link_btn">Logout</Button>
                             <div className="relative">
 
                                 <Link to={`/user/${id}`} className="cursor-pointer">  <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center text-xl font-semibold text-blue-50 ">
                                     {name[0]}
                                 </div></Link>
                                 {
-                                    isVerified ? <div className="w-4 h-4 rounded-full bg-green-300 absolute -right-1 bottom-0"></div> : <Link to={"/account_verify"} className="w-4 h-4 rounded-full bg-yellow-300 absolute -right-1 bottom-0 flex justify-center items-center font-semibold ">!</Link>
+                                    isVerified ? <div className="w-4 h-4 rounded-full bg-green-500 absolute -right-1 bottom-0"><img src="/assets/check.svg" alt="check icon" /></div> : <Link to={"/account_verify"} className="w-4 h-4 rounded-full bg-yellow-300 absolute -right-1 bottom-0 flex justify-center items-center font-semibold ">!</Link>
                                 }
 
                             </div>

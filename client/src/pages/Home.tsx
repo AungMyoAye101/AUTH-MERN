@@ -12,7 +12,7 @@ const Home = () => {
                 <img src="/assets/welcome.svg" alt="welcome icon" className=" w-40 md:w-48 aspect-square " />
                 <div className="flex items-center gap-2">
                     <h2 className="text-base md:text-lg font-semibold font-serif">Hello {name ? name : "Visitor"}! </h2>
-                    <img src="/assets/wave.svg" alt="wave" className="w-10 aspect-square" />
+                    <img src="/assets/wave.svg" alt="wave" className="w-7 aspect-square" />
                 </div>
                 <h1 className="text-2xl md:text-5xl font-bold font-serif ">Welcome to Simple Auth,</h1>
                 <p className="text-sm md:text-base font-serif text-center">Let's start with a simple authentication setup and feel free to explore.</p>

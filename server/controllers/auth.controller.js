@@ -247,6 +247,9 @@ const verifyOTP = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" })
         }
+        if (Date.now() > user.otpExpireIn) {
+            return res.status(400).json({ success: false, message: "Your OTP is expired!" })
+        }
         if (otp !== user.verifyOtp) {
             return res.status(400).json({ success: false, message: "Your OTP is not correct!" })
         }
@@ -266,10 +269,23 @@ const passwordReset = async (req, res) => {
     const { password, id } = req.body
 
     console.log(password, id)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: "Invalid user id!" })
+    }
+
 
     try {
         const hashed = await bcrypt.hash(password, 10)
-        const user = await User.findByIdAndUpdate(id, { password: hashed }, { new: true })
+        console.log("hashing...", hashed)
+        const user = await User.findOne({ _id: id })
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        console.log('user')
+        console.log(user)
+        user.password = hashed
+        await user.save()
+        console.log(user)
         return res.status(200).json({ success: true, message: "New password already set", user })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to reset password" })

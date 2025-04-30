@@ -49,7 +49,7 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
             setError(error.message)
         }
     }
-    const spinner = <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent bg-transparent animate-spin"></div>
+    const spinner = <div className="w-5 h-5 rounded-full border-2 border-white border-t-transparent bg-transparent animate-spin"></div>
     return (
         <form onSubmit={onSubmit} className="min-w-lg w-96 max-w-xl bg-neutral-50 px-4 py-6 rounded-lg shadow-md border flex flex-col gap-3">
             <h1 className="text-xl md:text-2xl font-semibold text-center font-serif text-neutral-800">{headingText}</h1>

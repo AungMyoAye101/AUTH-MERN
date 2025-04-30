@@ -30,7 +30,6 @@ const AccountVerify = () => {
 
     // request OTP from server
     const otpSender = async () => {
-        console.log('otp sending...')
         setOtpTimer(OTP_EXPIRES_IN)
         setResendTimer(RESEND_OTP)
         try {
@@ -49,7 +48,7 @@ const AccountVerify = () => {
             }
 
             setResend(false)
-            showToast("success", resData.message)
+            showToast("", resData.message)
             // navigate('/') // Redirect after OTP verification
 
         } catch (error: any) {
@@ -101,18 +100,14 @@ const AccountVerify = () => {
         return `${min}:${sec}`;
     };
 
-
+    const otpNoti = otpTimer <= 0 ? "expired " : `OTP expires in ${formatTime(otpTimer)}`
     return (
-        <section className='flex justify-center'>
+        <section className='container'>
             <Form headingText='Account Verification' endpoint='/auth/verify_account' method='POST' data={data} setError={setError} redirect={'/'} error={error}>
                 <h2 className=' font-serif text-center'>We have sent  OTP code to <span className='text-sm'>{email}</span>.</h2>
-                <div className='text-sm font-medium text-neutral-600'> OTP expires in <span className='font-medium'>{formatTime(otpTimer)}</span></div>
+                <div className='text-sm font-medium text-neutral-600'> {otpNoti}</div>
                 <FormController data={data.otp} type='number' name='otp' id='otp' onChange={handleChange} placeholder='Please enter OTP code' />
                 <div className='flex justify-between items-center '><div className='text-sm font-medium text-neutral-600'>Didn't get the code</div><Button loading={!resend} onClick={otpSender} className={`bg-orange-400 flex justify-center items-center font-sans w-20 h-8 text-sm ${!resend ? "cursor-wait" : ''}`}>{resend ? "Resend" : resendTimer}</Button>  </div>
-
-
-
-
             </Form>
         </section>
     )

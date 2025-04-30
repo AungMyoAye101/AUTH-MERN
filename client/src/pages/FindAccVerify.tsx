@@ -76,13 +76,14 @@ const FindAccVerify = () => {
         return `${min}:${sec}`;
     };
 
+    const otpNoti = otpTimer <= 0 ? "expired " : `OTP expires in ${formatTime(otpTimer)}`
 
     return (
         <section className='flex justify-center'>
             <Form headingText='Account Verification' endpoint='/auth/forgot_password/otp_verify' method='POST' data={data} setError={setError} redirect={'/reset_password'} error={error}>
-                <h2 className=' font-serif text-center'>We have sent  OTP code to<br /> <span className='text-xs'>{email}</span>.</h2>
-                <div className='text-sm font-medium text-neutral-600'> OTP expires in <span className='font-medium'>{formatTime(otpTimer)}</span></div>
-                <FormController type='number' name='otp' id='otp' onChange={handleChange} placeholder='Please enter OTP code' />
+                <h2 className=' font-serif text-center text-neutral-700'>We have sent  OTP code to<br /> <span className='text-xs'>{email}</span>.</h2>
+                <div className='text-sm font-medium text-neutral-600'> {otpNoti}</div>
+                <FormController type='number' name='otp' id='otp' onChange={handleChange} placeholder='Please enter OTP code' icon='/assets/key.svg' />
                 {/* <div className='flex justify-between items-center '><div className='text-sm font-medium text-neutral-600'>Didn't get the code</div><Button loading={!resend} onClick={otpSender} className={`bg-orange-400 flex justify-center items-center font-sans w-20 h-8 text-sm ${!resend ? "cursor-wait" : ''}`}>{resend ? "Resend" : resendTimer}</Button>  </div> */}
             </Form>
         </section>

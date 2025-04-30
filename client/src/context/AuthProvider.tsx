@@ -46,7 +46,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 return
             }
             const { user } = await res.json()
-            console.log(user)
             setUser({
                 id: user?._id,
                 name: user?.name,
@@ -62,36 +61,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         fetchUser()
     }, [])
-
-    // const onSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault()
-    //     try {
-    //         setLoading(true)
-    //         const res = await fetch(base_url + endpoint, {
-    //             method,
-    //             headers: {
-    //                 "Content-type": "application/json"
-    //             },
-    //             body: JSON.stringify(data),
-    //             credentials: "include"
-
-    //         })
-    //         const resData = await res.json()
-    //         setLoading(false)
-    //         if (!res.ok || resData.success === false) {
-    //             showToast('error', resData.message)
-    //             setError(resData.message)
-    //             return
-    //         }
-    //         fetchUser()
-    //         showToast('success', resData.message)
-    //         navigate(redirect.startsWith('/') ? redirect : '/' + redirect)
-    //     } catch (error: any) {
-    //         setLoading(false)
-    //         showToast('error', error.message)
-    //         setError(error.message)
-    //     }
-    // }
 
 
 
@@ -110,7 +79,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 throw new Error("Failed to logout")
             }
             setUser(defaultUser)
-            showToast("success", data.message)
+            showToast("", data.message)
 
         } catch (error: any) {
             showToast("error", error.message)

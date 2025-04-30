@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import NavBar from './components/NavBar'
 import AccountVerify from './pages/AccountVerify'
@@ -26,7 +25,6 @@ function App() {
           <Route path='/login' element={<PublicRoutes><Login /></PublicRoutes>} />
           <Route path='/signup' element={<PublicRoutes><Signup /></PublicRoutes>} />
           <Route path='/user/:id' element={<ProtectedRoutes><Profile /></ProtectedRoutes>} />
-          <Route path='/dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
           <Route path='/find_account' element={<FindAccount />} />
           <Route path='/otp_verify' element={<FindAccVerify />} />
