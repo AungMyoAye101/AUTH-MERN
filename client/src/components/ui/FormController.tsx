@@ -1,20 +1,19 @@
 
 import { useState } from 'react';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type InputType = {
-    data?: any,
-    disable?: boolean
+    register?: UseFormRegister<any>,
+    error?: FieldError,
     type: string,
     name: string,
-    id: string,
     placeholder: string,
-    style?: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    className?: string,
     icon?: string
 
 }
 
-const FormController = ({ data, disable, type = 'text', name, id, placeholder, onChange, style, icon }: InputType) => {
+const FormController = ({ type = 'text', name, placeholder, className, icon, register, error }: InputType) => {
     const [show, setshow] = useState(false)
 
     let inputType = type;
@@ -26,14 +25,14 @@ const FormController = ({ data, disable, type = 'text', name, id, placeholder, o
 
 
     return (
-        <label htmlFor={id} className={`h-10 w-full flex items-center  bg-neutral-200 rounded-lg text-sm overflow-hidden ${style} px-2`}>
+        <label htmlFor={name} className={`h-10 w-full flex items-center  bg-neutral-200 rounded-lg text-sm overflow-hidden px-2 ${className}`}>
 
             {
                 icon && <img src={icon} alt="icon" className='w-5 ' />
             }
 
 
-            <input value={data} disabled={disable ? true : false} type={inputType} name={name} id={id} onChange={onChange} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
+            <input type={inputType} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
             {
                 type === 'password' && (<>
 
@@ -41,6 +40,10 @@ const FormController = ({ data, disable, type = 'text', name, id, placeholder, o
 
 
                 </>)}
+
+            {
+                error && <p className='text-sm text-red-400'>{error.message}</p>
+            }
 
         </label>
     )
