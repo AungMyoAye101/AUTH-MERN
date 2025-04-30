@@ -37,8 +37,9 @@ const Form = ({ children, method, endpoint, headingText, data, setError, redirec
             console.log(resData)
             setLoading(false)
             if (!res.ok || resData.success === false) {
-                showToast('error', resData.message)
-                setError(resData.message)
+                const errorMessage = Array.isArray(resData.message) ? resData.message[0]?.msg : resData.message;
+                showToast('error', errorMessage);
+                setError(errorMessage);
                 return
             }
             fetchUser()

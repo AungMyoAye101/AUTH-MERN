@@ -7,8 +7,10 @@ const { validationResult } = require("express-validator")
 
 const register = async (req, res) => {
     const errors = validationResult(req)
+
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+
+        return res.status(400).json({ success: false, message: errors.array() });
     }
     const { name, email, password } = req.body;
 
@@ -40,7 +42,7 @@ const register = async (req, res) => {
         }
         await transporter.sendMail(mailOptions)
 
-        return res.status(201).json({ success: true, message: "success", user });
+        return res.status(201).json({ success: true, message: "Account created successfully", user });
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -48,10 +50,12 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ success: false, message: "All fields are required!" });
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, message: errors.array() })
     }
+    const { email, password } = req.body;
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
@@ -211,7 +215,7 @@ const deleteAccount = async (req, res) => {
 
 //Forgot password 
 
-const findAccoundSendOTP = async (req, res) => {
+const findAccountSendOTP = async (req, res) => {
     const { email } = req.body
     console.log(email)
     if (!email) {
@@ -243,6 +247,10 @@ const findAccoundSendOTP = async (req, res) => {
 }
 
 const verifyOTP = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status().json({ success: false, message: errors.array() })
+    }
     const { otp, userId } = req.body
     console.log(userId, otp)
     try {
@@ -304,7 +312,7 @@ module.exports = {
     verifyEmail,
     currentUser,
     deleteAccount,
-    findAccoundSendOTP,
+    findAccountSendOTP,
     verifyOTP,
     passwordReset
 };
