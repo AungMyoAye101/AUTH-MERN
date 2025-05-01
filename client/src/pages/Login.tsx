@@ -60,7 +60,7 @@ const Login = () => {
 
     return (
         <section className='container'>
-            <form onSubmit={handleSubmit(onSubmit)} className="min-w-lg w-96 max-w-xl bg-neutral-100 px-6 py-8 rounded-xl shadow-md border flex flex-col gap-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="form_container">
                 <div>
 
                     <h1 className='text-xl md:text-2xl font-bold text-center text-neutral-700'>Login</h1>
@@ -75,7 +75,7 @@ const Login = () => {
                 <Button type='submit' loading={loading}>Submit</Button>
                 {
 
-                    error && <p className='text-sm bg-red-400 text-white p-2 rounded-full text-center'>{error}</p>
+                    error && <p className='error_message'>{error}</p>
 
                 }
             </form>

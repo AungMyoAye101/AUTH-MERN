@@ -29,7 +29,7 @@ const FindAccount = () => {
 
 
     const findAccount = async (data: EmailType) => {
-        console.log("click")
+
         setLoading(true)
         try {
             const res = await fetch(base_url + '/auth/find_account', {

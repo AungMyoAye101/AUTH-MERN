@@ -1,41 +1,79 @@
 
-import React, { useEffect, useState } from 'react'
-import Form from '../components/ui/Form'
+import { useEffect, useState } from 'react'
+
 import FormController from '../components/ui/FormController'
 // import Button from '../components/ui/Button'
 // import { base_url } from '../lib/helper'
 // import { useAuth } from '../context/AuthProvider'
 import { useSearchParams } from 'react-router-dom'
 import { showToast } from '../context/ToastProvider'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { base_url } from '../lib/helper'
+import Button from '../components/ui/Button'
 
 
 
+const OTP_Schema = z.object({
+    otp: z.string().min(6, "OTP must be 6 characters").max(6, "OTP must be 6 characters"),
+    userId: z.string().optional()
+})
 
+type OTP_Type = z.infer<typeof OTP_Schema>
 
 const OTP_EXPIRES_IN = 5 * 60 // 5 minutes
-// const RESEND_OTP = 60
+
 
 const FindAccVerify = () => {
     const [searchParams] = useSearchParams()
     const userId = searchParams.get('userId')
     const email = searchParams.get("email")
-
-    const [data, setData] = useState({ otp: '', userId })
     const [error, setError] = useState('')
     const [otpTimer, setOtpTimer] = useState(OTP_EXPIRES_IN)
-    // const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
 
 
 
+    const { register, handleSubmit, formState: { errors } } = useForm<OTP_Type>({
+        resolver: zodResolver(OTP_Schema),
+        defaultValues: {
+            otp: undefined,
+            userId: userId || undefined
+        }
+    });
 
+    const OTP_Verify = async (data: OTP_Type) => {
+        setLoading(true)
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setData((pre) => ({ ...pre, [name]: value }))
+        try {
+            const res = await fetch(base_url + "/auth/forgot_password/otp_verify", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            })
+            const response = await res.json()
+            if (!res.ok || response.success === false) {
+                setError(response.message)
+                showToast("error", response.message)
+                return
+            }
+            showToast("success", response.message)
+            setLoading(false)
+
+        } catch (error) {
+            setLoading(false)
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError('Server ERR:Faild to verify OTP ')
+            }
+        }
     }
-
-    // request OTP from server
 
 
 
@@ -54,19 +92,7 @@ const FindAccVerify = () => {
         return () => clearInterval(intervalId)
     }, [])
 
-    // //Resend OTP timer
-    // useEffect(() => {
-    //     if (resendTimer === 0) {
-    //         setResend(true)
-    //         return
-    //     }
 
-    //     console.log(resendTimer)
-    //     const intervalId = setInterval(() => {
-    //         setResendTimer(pre => pre - 1)
-    //     }, 1000)
-    //     return () => clearInterval(intervalId)
-    // }, [resendTimer])
 
     // formatting for mm:ss
     const formatTime = (seconds: number) => {
@@ -79,13 +105,24 @@ const FindAccVerify = () => {
     const otpNoti = otpTimer <= 0 ? "expired " : `OTP expires in ${formatTime(otpTimer)}`
 
     return (
-        <section className='flex justify-center'>
-            <Form headingText='Account Verification' endpoint='/auth/forgot_password/otp_verify' method='POST' data={data} setError={setError} redirect={'/reset_password'} error={error}>
+        <section className='container'>
+
+            <form onSubmit={handleSubmit(OTP_Verify)} className='form_container'>
                 <h2 className=' font-serif text-center text-neutral-700'>We have sent  OTP code to<br /> <span className='text-xs'>{email}</span>.</h2>
                 <div className='text-sm font-medium text-neutral-600'> {otpNoti}</div>
-                <FormController type='number' name='otp' id='otp' onChange={handleChange} placeholder='Please enter OTP code' icon='/assets/key.svg' />
-                {/* <div className='flex justify-between items-center '><div className='text-sm font-medium text-neutral-600'>Didn't get the code</div><Button loading={!resend} onClick={otpSender} className={`bg-orange-400 flex justify-center items-center font-sans w-20 h-8 text-sm ${!resend ? "cursor-wait" : ''}`}>{resend ? "Resend" : resendTimer}</Button>  </div> */}
-            </Form>
+
+                <FormController
+                    type='number' name='otp'
+                    register={register}
+                    error={errors.otp}
+                    placeholder='Enter your OTP code.' />
+                <Button type='submit' loading={loading}>Send</Button>
+
+                {
+                    error && <p className='error_message'>{error}</p>
+                }
+
+            </form>
         </section>
     )
 }
