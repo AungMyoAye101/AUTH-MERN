@@ -27,7 +27,7 @@ const FormController = ({ type = 'text', name, placeholder, className, icon, reg
     return (
         <label htmlFor={name} className={` overflow-hidden  ${className}`}>
 
-            <div className='h-10 w-full flex items-center  bg-neutral-200 rounded-lg text-sm px-2 '>
+            <div className='h-10 w-full flex items-center  bg-neutral-200 rounded-xl text-sm px-2 '>
 
                 {
                     icon && <img src={icon} alt="icon" className='w-5 ' />

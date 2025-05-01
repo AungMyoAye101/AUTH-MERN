@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { showToast } from '../context/ToastProvider'
+import Button from '../components/ui/Button'
+import { Link } from 'react-router-dom'
 
 
 const loginSchema = z.object({
@@ -16,19 +18,14 @@ const loginSchema = z.object({
 type LoginType = z.infer<typeof loginSchema>
 
 const Login = () => {
+    const [loading, setLoading] = useState(false)
 
+    const [error, setError] = useState('') //errors from server
 
-    const [error, setError] = useState('')
-
+    //react useform 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(loginSchema) })
-
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target
-    //     setData((pre) => ({ ...pre, [name]: value }))
-    // }
-
     const onSubmit = async (data: LoginType) => {
-        console.log("click")
+        setLoading(true)
         try {
             const res = await fetch(base_url + "/auth/login", {
                 method: "POST",
@@ -39,14 +36,17 @@ const Login = () => {
                 credentials: "include"
             })
             const response = await res.json()
-            console.log(response)
+
             if (response.success === false) {
                 setError(response.message)
                 showToast("error", response.message)
+                setLoading(false)
                 return
             }
+            setLoading(false)
         } catch (err: any) {
-            console.log(err)
+
+            setLoading(false)
             if (err.response.data.errors) {
                 setError(err.response.data.errors[0].msg)
             } else if (err.response.data.message) {
@@ -60,25 +60,19 @@ const Login = () => {
 
     return (
         <section className='container'>
+            <form onSubmit={handleSubmit(onSubmit)} className="min-w-lg w-96 max-w-xl bg-neutral-100 px-6 py-8 rounded-xl shadow-md border flex flex-col gap-3">
+                <div>
 
-            {/* <Form headingText='Login' method='POST' endpoint={'/auth/login'} data={data} setError={setError} redirect='/' error={error}>
-                <h2 className="text-base md:text-lg font-medium font-serif text-center text-neutral-700">Please login your account</h2>
-                {
-                    loginData.map((field, i) => (<FormController key={i} type={field.type} name={field.name} id={field.name} placeholder={field.placeholder} onChange={handleChange} icon={field.icon} />))
-                }
-                <div className='flex justify-between items-center gap-2 text-sm'>
-                    <Link to={'/find_account'} className='link_text'>Forgot password?</Link>
-                    <Link to={'/signup'} className='link_text'>Sign up</Link>
+                    <h1 className='text-xl md:text-2xl font-bold text-center text-neutral-700'>Login</h1>
+                    <h2 className='text-base md:text-lg font-semibold text-center text-neutral-700'>Please login your account</h2>
                 </div>
-
-            </Form> */}
-            <form onSubmit={handleSubmit(onSubmit)} className="min-w-lg w-96 max-w-xl bg-neutral-100 px-4 py-6 rounded-lg shadow-md border flex flex-col gap-3">
                 {
                     loginData.map(field => (
                         <FormController name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} type={field.type} error={errors[field.name as keyof LoginType]} />
                     ))
                 }
-                <button type='submit'>Submit</button>
+                <div className='flex justify-between items-center text-xs font-serif text-neutral-600 '><Link to={'/find_account'}>Forget password?</Link> <Link to={'/signup'}>Signup</Link></div>
+                <Button type='submit' loading={loading}>Submit</Button>
                 {
 
                     error && <p className='text-sm bg-red-400 text-white p-2 rounded-full text-center'>{error}</p>
