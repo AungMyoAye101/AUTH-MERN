@@ -2,9 +2,6 @@
 import { useEffect, useState } from 'react'
 
 import FormController from '../components/ui/FormController'
-// import Button from '../components/ui/Button'
-// import { base_url } from '../lib/helper'
-// import { useAuth } from '../context/AuthProvider'
 import { useSearchParams } from 'react-router-dom'
 import { showToast } from '../context/ToastProvider'
 import { useForm } from 'react-hook-form'
@@ -70,7 +67,7 @@ const FindAccVerify = () => {
             if (error instanceof Error) {
                 setError(error.message)
             } else {
-                setError('Server ERR:Faild to verify OTP ')
+                setError('Server ERR:Failed to verify OTP ')
             }
         }
     }
