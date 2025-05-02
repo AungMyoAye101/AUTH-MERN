@@ -44,16 +44,14 @@ const Login = () => {
                 return
             }
             setLoading(false)
-        } catch (err: any) {
-
+        } catch (error) {
+            console.log(error)
             setLoading(false)
-            if (err.response.data.errors) {
-                setError(err.response.data.errors[0].msg)
-            } else if (err.response.data.message) {
-                setError(err.response.data.message)
-            } else {
-                setError("Failed to login")
+            if (error instanceof Error) {
+                setError(error.message)
+
             }
+
         }
 
     }

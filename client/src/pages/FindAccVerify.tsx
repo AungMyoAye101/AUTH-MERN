@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 
 import FormController from '../components/ui/FormController'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { showToast } from '../context/ToastProvider'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -30,7 +30,7 @@ const FindAccVerify = () => {
     const [otpTimer, setOtpTimer] = useState(OTP_EXPIRES_IN)
     const [loading, setLoading] = useState(false)
 
-
+    const navigate = useNavigate()
 
 
     const { register, handleSubmit, formState: { errors } } = useForm<OTP_Type>({
@@ -61,7 +61,7 @@ const FindAccVerify = () => {
             }
             showToast("success", response.message)
             setLoading(false)
-
+            navigate('/reset_password')
         } catch (error) {
             setLoading(false)
             if (error instanceof Error) {
