@@ -1,21 +1,22 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
 import Button from "./ui/Button"
+import { useState } from "react"
 
 
 
 const NavBar = () => {
     const { id, isVerified, logout, name } = useAuth()
-    // Removed redundant useAuth call and debug console.log
+    const [open, setOpen] = useState(false)
     return (
         <header className=" sticky top-0 left-0 right-0 z-50 h-16 ">
-            <nav className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
+            <nav className="mx-auto max-w-6xl p-4 flex justify-between items-center  relative">
                 <Link to={'/'}>
                     <h1 className="text-2xl text-blue-400 md:hidden font-serif font-bold">S<span className="text-neutral-700">A</span></h1>
                     <h1 className="text-2xl font-bold text-blue-400 font-serif hidden md:block">Simple <span className="text-neutral-800 -ml-1">auth</span> </h1>
                 </Link>
 
-                <div className="flex items-center  gap-2 text-sm">
+                <div className="hidden sm:flex items-center  gap-2 text-sm ">
                     {id ?
                         <>
 
@@ -39,6 +40,26 @@ const NavBar = () => {
                     }
 
                 </div>
+                {/* menu toggle bars */}
+                <img src="/assets/menu.svg" alt="menu icon" className="w-5 cursor-pointer sm:hidden" onClick={() => setOpen(pre => !pre)} />
+                {
+                    open && <div className="absolute right-0 w-40 bg-white py-6 px-2 top-12 flex flex-col text-center font-serif  rounded-xl shadow">
+                        {
+                            id ? <>
+                                <Link to={`/user/${id}`} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Profile</Link>
+                                {
+                                    !isVerified && <Link to={'/account_verify'} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Verify now</Link>
+                                }
+                                <Link to={`/update/${id}`} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Update</Link>
+                                <button onClick={() => { logout(); setOpen(false) }} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full text-red-400">Logout</button>
+
+                            </> : <>  <Link to={'/login'} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Login</Link>
+                                <Link to={'/signup'} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Signup</Link></>
+                        }
+
+                    </div>
+                }
+
             </nav>
         </header>
     )
