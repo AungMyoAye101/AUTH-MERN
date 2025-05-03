@@ -12,6 +12,7 @@ import FindAccount from './pages/FindAccount'
 import FindAccVerify from './pages/FindAccVerify'
 import ResetPassword from './pages/ResetPasswors'
 import UpdateUser from './pages/UpdateUser'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/signup' element={<PublicRoutes><Signup /></PublicRoutes>} />
           <Route path='/user/:id' element={<ProtectedRoutes><Profile /></ProtectedRoutes>} />
           <Route path='/update/:id' element={<ProtectedRoutes><UpdateUser /></ProtectedRoutes>} />
+          <Route path='/dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
           <Route path='/find_account' element={<FindAccount />} />
           <Route path='/otp_verify' element={<FindAccVerify />} />

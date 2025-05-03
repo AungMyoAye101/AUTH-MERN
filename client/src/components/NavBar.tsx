@@ -20,6 +20,7 @@ const NavBar = () => {
                     {id ?
                         <>
 
+                            <Link to={'/dashboard'} className="link_btn">Dashboard</Link>
                             <Button onClick={logout} className="link_btn">Logout</Button>
                             <div className="relative">
 
