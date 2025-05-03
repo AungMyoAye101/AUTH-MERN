@@ -6,6 +6,7 @@ import Button from "./ui/Button"
 
 const NavBar = () => {
     const { id, isVerified, logout, name } = useAuth()
+    // Removed redundant useAuth call and debug console.log
     return (
         <header className=" sticky top-0 left-0 right-0 z-50 h-16 ">
             <nav className="mx-auto max-w-6xl p-4 flex justify-between items-center ">

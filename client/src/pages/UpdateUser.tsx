@@ -1,31 +1,80 @@
 import { useState } from "react"
-import Form from "../components/ui/Form"
 import FormController from "../components/ui/FormController"
-import { updateUser } from "../lib/helper"
+import { base_url, updateUser } from "../lib/helper"
 import { useAuth } from "../context/AuthProvider"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { showToast } from "../context/ToastProvider"
+import { useNavigate } from "react-router-dom"
+import Button from "../components/ui/Button"
 
+const updateUserSchema = z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, "Name must contain at least one character"),
+    email: z.string().email("Invalid email")
+})
 
+type updateUserType = z.infer<typeof updateUserSchema>
 const UpdateUser = () => {
-    const [data, setData] = useState({
-        name: "",
-        email: ""
-    })
+
     const [error, setError] = useState('')
-    const { id } = useAuth()
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setData((pre) => ({ ...pre, [name]: value }))
+    const [loading, setLoading] = useState(false)
+    const { id, name, email, fetchUser } = useAuth()
+    const navigate = useNavigate()
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(updateUserSchema),
+        defaultValues: {
+            id: id || '',
+            name: name || '',
+            email: email || ''
+        }
+    })
+
+    const submitHandle = async (data: updateUserType) => {
+        setLoading(true)
+        try {
+            const res = await fetch(base_url + `/auth/update/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: "include"
+            })
+            const response = await res.json()
+            if (!res.ok || response.success === false) {
+
+                setError(response.message)
+                showToast("error", response.message)
+            }
+            showToast("success", response.message)
+            fetchUser()
+            navigate(`/user/${id}`)
+
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message)
+            }
+
+        } finally {
+            setLoading(false)
+        }
     }
+
     return (
         <section className='container'>
-            <Form endpoint={`/auth/update/${id}`} redirect="/" method="PUT" data={data} error={error} setError={setError} headingText="Update Account" >
+            <form onSubmit={handleSubmit(submitHandle)} className="form_container" >
                 {
                     updateUser.map(fields => (
-                        <FormController name={fields.name} id={fields.id} type={fields.type} onChange={onChange} placeholder={fields.placeholder} icon={fields.icon} />
+                        <FormController key={fields.id} defaultValue={fields.name} name={fields.name} type={fields.type} placeholder={fields.placeholder} icon={fields.icon} register={register} error={errors[fields.name as keyof updateUserType]} />
                     ))
                 }
-
-            </Form>
+                <Button type="submit" loading={loading}>Update</Button>
+                {
+                    error && <p className="error_message">{error}</p>
+                }
+            </form>
 
         </section>
     )

@@ -9,11 +9,12 @@ type InputType = {
     name: string,
     placeholder: string,
     className?: string,
-    icon?: string
+    icon?: string,
+    defaultValue?: string,
 
 }
 
-const FormController = ({ type = 'text', name, placeholder, className, icon, register, error }: InputType) => {
+const FormController = ({ type = 'text', name, placeholder, className, icon, register, error, defaultValue }: InputType) => {
     const [show, setshow] = useState(false)
 
     let inputType = type;
@@ -34,7 +35,7 @@ const FormController = ({ type = 'text', name, placeholder, className, icon, reg
                 }
 
 
-                <input type={inputType} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
+                <input type={inputType} defaultValue={defaultValue} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
                 {
                     type === 'password' && (<>
 
