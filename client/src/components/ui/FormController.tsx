@@ -26,16 +26,16 @@ const FormController = ({ type = 'text', name, placeholder, className, icon, reg
 
 
     return (
-        <label htmlFor={name} className={` overflow-hidden  ${className}`}>
+        <label htmlFor={name} className={` overflow-hidden  ${className} `}>
 
-            <div className='h-10 w-full flex items-center  bg-neutral-200 rounded-xl text-sm px-2 '>
+            <div className={`h-10 w-full flex items-center  bg-neutral-200 rounded-xl text-sm px-2 `}>
 
                 {
                     icon && <img src={icon} alt="icon" className='w-5 ' />
                 }
 
 
-                <input type={inputType} defaultValue={defaultValue} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className="w-full h-full border-none focus:outline-none bg-transparent ml-2 " />
+                <input type={inputType} defaultValue={defaultValue} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className='w-full h-full border-none focus:outline-none bg-neutral-200 ml-1' />
                 {
                     type === 'password' && (<>
 

@@ -71,7 +71,7 @@ const Signup = () => {
                     signupData.map(field => <FormController name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} type={field.type} error={errors[field.name as keyof SignupType]} />)
                 }
                 <div className='flex justify-between items-center gap-2 '>
-                    <p className='link_text'>Already have an account</p>
+                    <p className='link_text hover:text-neutral-700'>Already have an account</p>
                     <Link to={'/login'} className='link_text'>Login</Link>
                 </div>
                 <Button type='submit' loading={loading}>Submit</Button>

@@ -31,8 +31,6 @@ const FindAccVerify = () => {
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
-
-
     const { register, handleSubmit, formState: { errors } } = useForm<OTP_Type>({
         resolver: zodResolver(OTP_Schema),
         defaultValues: {
@@ -60,15 +58,17 @@ const FindAccVerify = () => {
                 return
             }
             showToast("success", response.message)
-            setLoading(false)
+
             navigate('/reset_password')
         } catch (error) {
-            setLoading(false)
+
             if (error instanceof Error) {
                 setError(error.message)
             } else {
                 setError('Server ERR:Failed to verify OTP ')
             }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -105,7 +105,8 @@ const FindAccVerify = () => {
         <section className='container'>
 
             <form onSubmit={handleSubmit(OTP_Verify)} className='form_container'>
-                <h2 className=' font-serif text-center text-neutral-700'>We have sent  OTP code to<br /> <span className='text-xs'>{email}</span>.</h2>
+                <h1 className='text-xl md:text-2xl font-bold text-neutral-700 text-center'>Account Verification</h1>
+                <h2 className=' font-serif text-center text-neutral-700 leading-tight'>We have sent  OTP code to <span className='text-xs'>{email}</span>.</h2>
                 <div className='text-sm font-medium text-neutral-600'> {otpNoti}</div>
 
                 <FormController
