@@ -2,6 +2,7 @@ const express = require("express")
 const { login, logout, register, updateUser, verifyEmail, currentUser, deleteAccount, verifyOTP, sendOTP, findAccountSendOTP, passwordReset } = require("../controllers/auth.controller.js")
 const userVerify = require("../middleware/auth.middleware.js")
 const { registerSchema, loginSchema, otpSchema } = require("../config/validator.js")
+const { totalUsers } = require("../controllers/user.controller.js")
 const authRouter = express.Router()
 
 authRouter.post('/register', registerSchema, register)
@@ -15,5 +16,6 @@ authRouter.post('/find_account', findAccountSendOTP)
 authRouter.post('/forgot_password/otp_verify', otpSchema, verifyOTP)
 authRouter.post('/reset_password', passwordReset)
 authRouter.delete('/delete_account', userVerify, deleteAccount)
+authRouter.get('/users', userVerify, totalUsers)
 
 module.exports = authRouter
