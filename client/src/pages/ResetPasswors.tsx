@@ -17,13 +17,13 @@ const password = z.object({
 })
 type Password = z.infer<typeof password>
 const ResetPassword = () => {
-    const { id } = useAuth()
+    const { id, fetchUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    console.log(id)
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(password),
         defaultValues: {
             password: '',
@@ -31,10 +31,8 @@ const ResetPassword = () => {
         }
     })
     useEffect(() => {
-        if (id) {
-            setValue('id', id)
-        }
-    }, [id])
+        fetchUser()
+    }, [])
 
     const submitHandle = async (data: Password) => {
         console.log(data)

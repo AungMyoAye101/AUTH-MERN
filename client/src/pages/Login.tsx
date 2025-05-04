@@ -73,6 +73,7 @@ const Login = () => {
                 }
                 <div className='flex justify-between items-center text-xs font-serif text-neutral-600 '><Link to={'/find_account'}>Forget password?</Link> <Link to={'/signup'}>Signup</Link></div>
                 <Button type='submit' loading={loading}>Submit</Button>
+                <Link to={'/account-appeal'} className='text-xs font-serif hover:text-purple-400'>If your account was banned . Please contact us for appeal.</Link>
                 {
 
                     error && <p className='error_message'>{error}</p>

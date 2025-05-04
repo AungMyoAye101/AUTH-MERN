@@ -13,6 +13,7 @@ import FindAccVerify from './pages/FindAccVerify'
 import ResetPassword from './pages/ResetPasswors'
 import UpdateUser from './pages/UpdateUser'
 import Dashboard from './pages/Dashboard'
+import Appeal from './pages/Appeal'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/account_verify' element={<ProtectedRoutes><AccountVerify /></ProtectedRoutes>} />
           <Route path='/find_account' element={<FindAccount />} />
           <Route path='/otp_verify' element={<FindAccVerify />} />
+          <Route path='/account-appeal' element={<Appeal />} />
           <Route path='/reset_password' element={<ResetPassword />} />
         </Routes>
       </section>

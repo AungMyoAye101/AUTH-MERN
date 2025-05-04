@@ -51,6 +51,7 @@ const FindAccount = () => {
             console.log(resData)
             setLoading(false)
             showToast('success', resData.message)
+
             navigate(`/otp_verify?email=${data.email}&userId=${resData.userId}`)
         } catch (error: any) {
             setError(error.message)

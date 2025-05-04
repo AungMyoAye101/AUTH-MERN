@@ -58,11 +58,12 @@ const login = async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
+        console.log("logo", user)
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" });
         }
-        if (user.isbanned) {
-            return res.status(400).json({ success: false, message: "Sorry your account was banned!.Please connect coustmer service." });
+        if (user.isBanned) {
+            return res.status(400).json({ success: false, message: "Sorry, your account has been banned! Please contact customer service." });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);

@@ -40,19 +40,20 @@ const unbanned = async (req, res) => {
 }
 
 const account_appeal = async (req, res) => {
-    const { id, about } = req.body
+    const { email, about } = req.body
     try {
-        const mailOptions = {
-            from: process.env.SENDER_EMAIL,
-            to: process.env.SENDER_EMAIL,
-            subject: "Account Appeal.",
-            text: `<div><h1>I want to appeal my account that was bannned.</h1><p>${about}</></div>`,
+        const user = await User.findOne({ email })
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" })
         }
-        await transporter.sendMail(mailOptions)
-        await User.findByIdAndUpdate(id, { isBanned: true }, { new: true })
+        user.isBanned = false;
+        await user.save()
+
+
         return res.status(200).json({ success: true, message: "Your appeal sent successfully." })
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Faild to sent appeal." })
+        return res.status(500).json({ success: false, message: "Failed to send appeal." })
     }
 }
 module.exports = { totalUsers, ban, unbanned, account_appeal }
