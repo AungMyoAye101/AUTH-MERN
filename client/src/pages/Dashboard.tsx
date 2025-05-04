@@ -8,10 +8,10 @@ import { User } from '../shared/type'
 const Dashboard = () => {
     const [users, setUsers] = useState<User[]>([])
     const [total, setTotal] = useState(0)
-
+    const totalBannedUsers = users.filter(user => user.isBanned === true)
     const getUsers = async () => {
         try {
-            const res = await fetch(base_url + "/auth/users", {
+            const res = await fetch(base_url + "/account/users", {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json"
@@ -39,7 +39,7 @@ const Dashboard = () => {
     }, [])
 
 
-    const banned = async (id: string) => {
+    const banUser = async (id: string) => {
         try {
             const res = await fetch(base_url + "/account/ban", {
                 method: "POST",
@@ -55,7 +55,7 @@ const Dashboard = () => {
                 return
             }
             showToast("success", data.message)
-            console.log(data)
+            setUsers(pre => pre.map(user => (user._id === id ? { ...user, isBanned: true } : user)))
         } catch (error) {
             if (error instanceof Error) {
                 showToast("error", error.message)
@@ -63,9 +63,9 @@ const Dashboard = () => {
             }
         }
     }
-    const unbanned = async (id: string) => {
+    const unbanUser = async (id: string) => {
         try {
-            const res = await fetch(base_url + "/account/unbanned", {
+            const res = await fetch(base_url + "/account/unban", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
@@ -79,6 +79,7 @@ const Dashboard = () => {
                 return
             }
             showToast("success", data.message)
+            setUsers(pre => pre.map(user => (user._id === id ? { ...user, isBanned: false } : user)))
             console.log(data)
         } catch (error) {
             if (error instanceof Error) {
@@ -91,16 +92,24 @@ const Dashboard = () => {
 
     return (
         <section className='mt-4 space-y-4'>
-            <div className='bg-white shadow-md rounded-lg p-4 flex flex-col  w-52 hover:shadow-xl'>
-                <h2 className='text-neutral-600 font-semibold font-serif'>Totals</h2>
-                <h1 className='font-bold text-3xl text-center '>{total}</h1>
-                <p className='text-neutral-600 font-serif text-end'>users</p>
+            <div className='flex gap-4'>
+                <div className='bg-white shadow-md rounded-lg p-4 flex flex-col  w-52 hover:shadow-xl'>
+                    <h2 className='text-neutral-600 font-semibold font-serif'>Totals</h2>
+                    <h1 className='font-bold text-3xl text-center '>{total}</h1>
+                    <p className='text-neutral-600 font-serif text-end'>users</p>
+                </div>   <div className='bg-white shadow-md rounded-lg p-4 flex flex-col  w-52 hover:shadow-xl'>
+                    <h2 className='text-neutral-600 font-semibold font-serif'>Banned
+                    </h2>
+                    <h1 className='font-bold text-3xl text-center '>{totalBannedUsers.length}</h1>
+                    <p className='text-neutral-600 font-serif text-end'>users</p>
+                </div>
             </div>
+
             <div className='flex gap-4 flex-wrap'>
 
                 {
-                    users.map((data, i) => (<div className='flex items-center justify-between gap-2 bg-white p-2 w-70 rounded-lg hover:shadow-lg border'>
-                        <div className='flex items-center gap-1 ' key={i}>
+                    users.map((data) => (<div key={data._id} className='flex items-center justify-between gap-2 bg-white p-2 w-70 rounded-lg hover:shadow-lg border'>
+                        <div className='flex items-center gap-1 '>
 
                             <div className='w-10 h-10 rounded-full bg-purple-400 flex justify-center items-center text-white font-semibold'>{data.name[0]}</div>
                             <div>
@@ -109,7 +118,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         {
-                            data.isBanned ? <Button className='bg-neutral-300 text-blue-400 text-sm' onClick={() => unbanned(data._id)}>Ban</Button> : <Button className='bg-red-400 text-sm' onClick={() => banned(data._id)}>Ban</Button>
+                            data.isBanned ? <Button className='bg-neutral-300 text-blue-400 text-sm' onClick={() => unbanUser(data._id)}>unban</Button> : <Button className='bg-red-400 text-sm' onClick={() => banUser(data._id)}>Ban</Button>
                         }
 
                     </div>))
