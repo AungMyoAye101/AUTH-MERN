@@ -61,6 +61,9 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" });
         }
+        if (user.isbanned) {
+            return res.status(400).json({ success: false, message: "Sorry your account was banned!.Please connect coustmer service." });
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
@@ -217,7 +220,6 @@ const deleteAccount = async (req, res) => {
 
 const findAccountSendOTP = async (req, res) => {
     const { email } = req.body
-    console.log(email)
     if (!email) {
         return res.status(400).json({ success: false, message: "email is required!" })
     }
@@ -252,7 +254,6 @@ const verifyOTP = async (req, res) => {
         return res.status(400).json({ success: false, message: errors.array() })
     }
     const { otp, userId } = req.body
-    console.log(userId, otp)
     try {
         const user = await User.findOne({ _id: userId })
         if (!user) {

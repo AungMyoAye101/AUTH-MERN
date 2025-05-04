@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db.js");
 const authRouter = require("./routes/auth.js");
-const path = require("path");
+const userRouter = require("./routes/user.route.js")
 
 dotenv.config();
 const app = express();
@@ -28,6 +28,7 @@ app.use(cors({
 
 // Auth routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/account', userRouter);
 
 app.get('/', (req, res) => res.send("Server is alive."));
 app.listen(port, () => console.log("Server is listening on port " + port));

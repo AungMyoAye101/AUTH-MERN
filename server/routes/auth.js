@@ -15,8 +15,7 @@ authRouter.post('/me', userVerify, currentUser)
 authRouter.post('/find_account', findAccountSendOTP)
 authRouter.post('/forgot_password/otp_verify', otpSchema, verifyOTP)
 authRouter.post('/reset_password', passwordReset)
-authRouter.post('/ban', ban)
 authRouter.delete('/delete_account', userVerify, deleteAccount)
-authRouter.get('/users', userVerify, totalUsers)
+
 
 module.exports = authRouter

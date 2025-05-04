@@ -41,7 +41,31 @@ const Dashboard = () => {
 
     const banned = async (id: string) => {
         try {
-            const res = await fetch(base_url + "/auth/ban", {
+            const res = await fetch(base_url + "/account/ban", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ id }),
+                credentials: "include"
+            })
+            const data = await res.json()
+            if (!res.ok || data.success === false) {
+                showToast("error", data.message)
+                return
+            }
+            showToast("success", data.message)
+            console.log(data)
+        } catch (error) {
+            if (error instanceof Error) {
+                showToast("error", error.message)
+                console.error(error.message)
+            }
+        }
+    }
+    const unbanned = async (id: string) => {
+        try {
+            const res = await fetch(base_url + "/account/unbanned", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
@@ -84,7 +108,10 @@ const Dashboard = () => {
                                 <p className='text-xs -mt-1'>{data.email}</p>
                             </div>
                         </div>
-                        <Button className='bg-red-400 text-sm' onClick={() => banned(data._id)}>Ban</Button>
+                        {
+                            data.isBanned ? <Button className='bg-neutral-300 text-blue-400 text-sm' onClick={() => unbanned(data._id)}>Ban</Button> : <Button className='bg-red-400 text-sm' onClick={() => banned(data._id)}>Ban</Button>
+                        }
+
                     </div>))
                 }
             </div>

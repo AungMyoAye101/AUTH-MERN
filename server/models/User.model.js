@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     isBanned: {
         type: Boolean,
         default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 const User = mongoose.models.User || mongoose.model("User", userSchema)
