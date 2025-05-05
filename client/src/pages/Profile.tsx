@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Button from "../components/ui/Button"
 import { useAuth } from "../context/AuthProvider"
 import { showToast } from "../context/ToastProvider"
@@ -8,6 +8,8 @@ import { base_url } from "../lib/helper"
 
 const Profile = () => {
     const { id, name, email, isVerified, fetchUser } = useAuth()
+    const params = useParams()
+
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const deleteHandler = async () => {
@@ -47,14 +49,17 @@ const Profile = () => {
                         <p className="text-sm text-neutral-700">{email}</p>
                     </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                    <Link to={`/update/${id}`} className=" link_btn text-xs ">Update</Link>
-                    {
-                        !isVerified && <Link to={'/account_verify'} className=" link_btn bg-orange-400 text-xs ">Verify Now</Link>
-                    }
+                {
+                    id === params.id && <div className="flex flex-col gap-1">
+                        <Link to={`/update/${id}`} className=" link_btn text-xs ">Update</Link>
+                        {
+                            !isVerified && <Link to={'/account_verify'} className=" link_btn bg-orange-400 text-xs ">Verify Now</Link>
+                        }
 
-                    <Button loading={loading} onClick={deleteHandler} className="text-xs bg-red-400">Delete</Button>
-                </div>
+                        <Button loading={loading} onClick={deleteHandler} className="text-xs bg-red-400">Delete</Button>
+                    </div>
+                }
+
             </div>
 
         </section>

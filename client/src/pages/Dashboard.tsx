@@ -5,6 +5,7 @@ import { base_url } from '../lib/helper'
 import { showToast } from '../context/ToastProvider'
 import { User } from '../shared/type'
 import { useAuth } from '../context/AuthProvider'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
     const [users, setUsers] = useState<User[]>([])
@@ -98,14 +99,14 @@ const Dashboard = () => {
 
                 {
                     users.map((data) => (<div key={data._id} className='flex items-center justify-between gap-2 bg-white p-2 w-70 rounded-lg hover:shadow-lg border'>
-                        <div className='flex items-center gap-2 '>
+                        <Link to={`/user/${data._id}`} className='flex items-center gap-2 '>
 
                             <div className='w-10 h-10 rounded-full bg-purple-400 flex justify-center items-center text-white font-semibold'>{data.name[0]}</div>
                             <div>
                                 <p className=' font-semibold'>{data.name}</p>
                                 <p className='text-sm font-serif'>{data.email}</p>
                             </div>
-                        </div>
+                        </Link>
                         {
                             isAdmin && <div>
                                 {
