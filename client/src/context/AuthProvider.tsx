@@ -35,8 +35,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const fetchUser = async () => {
         try {
-            const res = await fetch(base_url + '/auth/me', {
-                method: "POST",
+            const res = await fetch(base_url + '/account/me', {
+                method: "GET",
                 headers: {
                     "Content-type": "application/json"
                 },

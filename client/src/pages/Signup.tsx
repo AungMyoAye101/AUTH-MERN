@@ -10,6 +10,7 @@ import { showToast } from '../context/ToastProvider'
 import Button from '../components/ui/Button'
 
 
+
 const signupSchema = z.object({
     name: z.string().min(1, "Name must be at least one character"),
     email: z.string().email("Invalid email"),
@@ -43,19 +44,20 @@ const Signup = () => {
             if (!res.ok || response.success === false) {
                 setError(response.message)
                 showToast("error", response.message)
-                setLoading(false)
+
                 return
             }
-            setLoading(false)
+
             showToast('success', response.message)
             navigate('/')
 
         } catch (error) {
-            setLoading(false)
+
             if (error instanceof Error) {
                 setError(error.message)
             }
-            setError("Server ERR:Signup failed")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -68,7 +70,7 @@ const Signup = () => {
             <form onSubmit={handleSubmit(submitHandle)} className='form_container'>
                 <h2 className="text-base md:text-lg font-medium font-serif text-center text-neutral-700">Please create an account</h2>
                 {
-                    signupData.map(field => <FormController name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} type={field.type} error={errors[field.name as keyof SignupType]} />)
+                    signupData.map(field => <FormController label={field.label} name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} type={field.type} error={errors[field.name as keyof SignupType]} />)
                 }
                 <div className='flex justify-between items-center gap-2 '>
                     <p className='link_text hover:text-neutral-700'>Already have an account</p>

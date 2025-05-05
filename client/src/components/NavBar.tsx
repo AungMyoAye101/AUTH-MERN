@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
-import Button from "./ui/Button"
+
 import { useState } from "react"
+import Button from "./ui/Button"
 
 
 
@@ -48,6 +49,8 @@ const NavBar = () => {
                         {
                             id ? <>
                                 <Link to={`/user/${id}`} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Profile</Link>
+
+                                <Link to={`/dashboard`} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Dashboard</Link>
                                 {
                                     !isVerified && <Link to={'/account_verify'} className="text-sm hover:bg-purple-400 hover:text-white p-2 rounded-full" onClick={() => setOpen(false)}>Verify now</Link>
                                 }

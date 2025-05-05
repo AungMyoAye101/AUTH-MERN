@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from 'react'
-import Button from '../components/ui/Button'
 import { base_url } from '../lib/helper'
 import { showToast } from '../context/ToastProvider'
 import { User } from '../shared/type'
 import { useAuth } from '../context/AuthProvider'
 import { Link } from 'react-router-dom'
+import Button from '../components/ui/Button'
 
 const Dashboard = () => {
     const [users, setUsers] = useState<User[]>([])

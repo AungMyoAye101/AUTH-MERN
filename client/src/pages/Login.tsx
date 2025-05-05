@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { showToast } from '../context/ToastProvider'
-import Button from '../components/ui/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthProvider'
+import Button from '../components/ui/Button'
 
 
 const loginSchema = z.object({
@@ -68,12 +68,12 @@ const Login = () => {
                 </div>
                 {
                     loginData.map(field => (
-                        <FormController name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} type={field.type} error={errors[field.name as keyof LoginType]} />
+                        <FormController name={field.name} key={field.id} icon={field.icon} register={register} placeholder={field.placeholder} label={field.label} type={field.type} error={errors[field.name as keyof LoginType]} />
                     ))
                 }
-                <div className='flex justify-between items-center text-xs font-serif text-neutral-600 '><Link to={'/find_account'}>Forget password?</Link> <Link to={'/signup'}>Signup</Link></div>
+                <div className='flex justify-between items-center text-xs font-serif text-neutral-600 '><Link to={'/find_account'} className='hover:text-purple-400'>Forget password?</Link> <Link to={'/signup'} className='hover:text-purple-400'>Signup</Link></div>
                 <Button type='submit' loading={loading}>Submit</Button>
-                <Link to={'/account-appeal'} className='text-xs font-serif hover:text-purple-400'>If your account was banned . Please contact us for appeal.</Link>
+                <Link to={'/account-appeal'} className='text-xs font-serif text-center hover:text-purple-400'>If your account was banned . Please contact us for appeal.</Link>
                 {
 
                     error && <p className='error_message'>{error}</p>

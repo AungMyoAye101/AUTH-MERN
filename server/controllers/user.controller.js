@@ -8,7 +8,29 @@ const totalUsers = async (req, res) => {
 
         return res.status(200).json({ success: true, message: "Get all users", total, users })
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Faild to get users" })
+        return res.status(500).json({ success: false, message: "Failed to get users" })
+    }
+}
+//check user is authicated
+
+const currentUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.id)
+        return res.status(200).json({ success: true, message: "User already logged in", user })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to check current user!" })
+    }
+}
+const getUser = async (req, res) => {
+    const { id } = req.body
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: "Invalid userId" })
+    }
+    try {
+        const user = await User.findById(id)
+        return res.status(200).json({ success: true, message: "User already login", user })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed to check current user!" })
     }
 }
 
@@ -56,4 +78,4 @@ const account_appeal = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to send appeal." })
     }
 }
-module.exports = { totalUsers, ban, unbanned, account_appeal }
+module.exports = { totalUsers, ban, unbanned, account_appeal, currentUser, getUser }

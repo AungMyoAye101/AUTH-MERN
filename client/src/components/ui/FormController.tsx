@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type InputType = {
+    label?: string,
     register?: UseFormRegister<any>,
     error?: FieldError,
     type: string,
@@ -14,7 +15,7 @@ type InputType = {
 
 }
 
-const FormController = ({ type = 'text', name, placeholder, className, icon, register, error, defaultValue }: InputType) => {
+const FormController = ({ label, type = 'text', name, placeholder, className, icon, register, error, defaultValue }: InputType) => {
     const [show, setshow] = useState(false)
 
     let inputType = type;
@@ -26,16 +27,17 @@ const FormController = ({ type = 'text', name, placeholder, className, icon, reg
 
 
     return (
-        <label htmlFor={name} className={` overflow-hidden  ${className} `}>
+        <div className={` overflow-hidden  ${className} `}>
+            <label htmlFor="name" className='text-sm font-serif opacity-80 text-neutral-700'>{label}</label>
 
-            <div className={`h-10 w-full flex items-center  bg-neutral-200 rounded-xl text-sm px-2 `}>
+            <div className={`h-10 w-full flex items-center  bg-neutral-200 rounded-lg text-sm px-2 `}>
 
                 {
                     icon && <img src={icon} alt="icon" className='w-5 ' />
                 }
 
 
-                <input type={inputType} defaultValue={defaultValue} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className='w-full h-full border-none focus:outline-none bg-neutral-200 ml-1' />
+                <input type={inputType} defaultValue={defaultValue} id={name} {...(register ? register(name) : {})} placeholder={placeholder} className='w-full h-full border-none focus:outline-none bg-neutral-200 ml-2' />
                 {
                     type === 'password' && (<>
 
@@ -49,7 +51,7 @@ const FormController = ({ type = 'text', name, placeholder, className, icon, reg
                 error && <p className='text-sm text-red-400 mt-1'>{error.message}</p>
             }
 
-        </label>
+        </div>
     )
 }
 

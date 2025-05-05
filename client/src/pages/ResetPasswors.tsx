@@ -23,7 +23,7 @@ const ResetPassword = () => {
     const navigate = useNavigate()
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         resolver: zodResolver(password),
         defaultValues: {
             password: '',
@@ -32,6 +32,7 @@ const ResetPassword = () => {
     })
     useEffect(() => {
         fetchUser()
+        setValue("id", id)
     }, [])
 
     const submitHandle = async (data: Password) => {
