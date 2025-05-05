@@ -8,7 +8,8 @@ type UserType = {
     id: string | undefined,
     name: string,
     email: string,
-    isVerified: boolean
+    isVerified: boolean,
+    isAdmin: boolean
 }
 type AuthContextProp = UserType & {
     logout: () => void
@@ -18,7 +19,8 @@ const defaultUser: UserType = {
     id: '',
     name: '',
     email: '',
-    isVerified: false
+    isVerified: false,
+    isAdmin: false
 }
 
 
@@ -50,7 +52,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 id: user?._id,
                 name: user?.name,
                 email: user?.email,
-                isVerified: user?.isVerified
+                isVerified: user?.isVerified,
+                isAdmin: user?.isAdmin
             })
         } catch (error) {
             console.log(error)
@@ -90,7 +93,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
     return (
-        <userContext.Provider value={{ id: user?.id, name: user?.name, email: user?.email, isVerified: user?.isVerified, logout, fetchUser }}>{children}</userContext.Provider>
+        <userContext.Provider value={{ id: user?.id, name: user?.name, email: user?.email, isVerified: user?.isVerified, isAdmin: user?.isAdmin, logout, fetchUser }}>{children}</userContext.Provider>
     )
 }
 
