@@ -12,8 +12,12 @@ const Dashboard = () => {
     const [total, setTotal] = useState(0)
     const totalBannedUsers = users.filter(user => user.isBanned === true)
     const totalUnverifyUsers = users.filter(user => user.isVerified === false)
+    const [loading, setLoading] = useState(false)
     const { isAdmin } = useAuth()
+    console.log(users)
     const getUsers = async () => {
+
+        setLoading(true)
         try {
             const res = await fetch(base_url + "/account/users", {
                 method: "GET",
@@ -35,6 +39,8 @@ const Dashboard = () => {
                 showToast("error", error.message)
                 console.error(error.message)
             }
+        } finally {
+            setLoading(false)
         }
     }
     useEffect(() => {
@@ -72,6 +78,7 @@ const Dashboard = () => {
 
 
 
+
     return (
         <section className='mt-4 space-y-4'>
             <div className='flex gap-4'>
@@ -96,12 +103,21 @@ const Dashboard = () => {
             </div>
 
             <div className='flex gap-4 flex-wrap'>
-
                 {
-                    users.map((data) => (<div key={data._id} className='flex items-center justify-between gap-2 bg-white p-2 w-70 rounded-lg hover:shadow-lg border'>
+                    loading ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
+                        <div className='flex items-center gap-2 bg-white w-80 p-2 rounded-lg border shadow ' key={i}>
+                            <div className='w-10 h-10 rounded-full bg-neutral-300 flex justify-center items-center text-white font-semibold'></div>
+                            <div className='flex flex-col gap-1 w-[80%]'>
+
+                                <div className=' h-3     rounded bg-neutral-300 '></div>
+                                <div className=' h-3     rounded bg-neutral-300 '></div>
+                            </div>
+
+                        </div>
+                    )) : users.map((data) => (<div key={data._id} className='flex items-center justify-between gap-2 bg-white p-2 w-80 rounded-lg hover:shadow-lg border'>
                         <Link to={`/user/${data._id}`} className='flex items-center gap-2 '>
 
-                            <div className='w-10 h-10 rounded-full bg-purple-400 flex justify-center items-center text-white font-semibold'>{data.name[0]}</div>
+                            <div className='w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center text-white font-semibold'>{data.name[0]}</div>
                             <div>
                                 <p className=' font-semibold'>{data.name}</p>
                                 <p className='text-sm font-serif'>{data.email}</p>
@@ -118,6 +134,10 @@ const Dashboard = () => {
 
                     </div>))
                 }
+
+
+
+
             </div>
 
         </section>

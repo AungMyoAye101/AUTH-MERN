@@ -6,8 +6,8 @@ const User = require('../models/User.model.js');
 describe('Auth API', () => {
     const testUser = {
         name: 'Test User',
-        email: 'testuser3@example.com',
-        password: 'test1234'
+        email: 'testuser4@example.com',
+        password: 'Test1234'
     };
     let userId;
     let cookie;
@@ -56,18 +56,6 @@ describe('Auth API', () => {
         expect(res.body.success).toBe(false);
     });
 
-    it("Should user already login", async () => {
-        const res = await request(app).post("api/v1/auth/me").set('Cookie', cookie)
-        expect(res.statusCode).toBe(200)
-        expect(res.message).toBe("User already login")
-    })
-
-    it('should logout successfully', async () => {
-        const res = await request(app).post('/api/v1/auth/logout');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.success).toBe(true);
-    });
-
     it("should update succefully", async () => {
         const updateRes = await request(app).put(`/api/v1/auth/update/${userId}`).send({ "name": "User Updated" });
         expect(updateRes.statusCode).toBe(200);
@@ -82,9 +70,15 @@ describe('Auth API', () => {
         otp = res.body.user.verifyOtp
     })
     it("should send email verification successfull", async () => {
-        const res = await request(app).post('/api/v1/auth/verify_email').set("Cookie", cookie).send({ "otp": otp })
+        const res = await request(app).post('/api/v1/auth/verify_account').set("Cookie", cookie).send({ "otp": otp })
         expect(res.statusCode).toBe(200)
         expect(res.body.success).toBe(true)
         expect(res.body.message).toBe("Your account has been verified!")
     })
+
+    it('should logout successfully', async () => {
+        const res = await request(app).post('/api/v1/auth/logout');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+    });
 });

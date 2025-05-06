@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { showToast } from '../context/ToastProvider'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthProvider'
 import Button from '../components/ui/Button'
 
 
@@ -22,7 +21,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('') //errors from server
     const navigate = useNavigate()
-    const { fetchUser } = useAuth()
+
 
     //react useform 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(loginSchema) })
@@ -46,7 +45,6 @@ const Login = () => {
                 return
             }
             showToast("success", response.message)
-            fetchUser()
             navigate("/")
         } catch (error) {
             if (error instanceof Error) {

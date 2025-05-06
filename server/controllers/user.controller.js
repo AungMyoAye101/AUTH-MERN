@@ -6,7 +6,7 @@ const totalUsers = async (req, res) => {
         const users = await User.find()
         const total = await User.countDocuments()
 
-        return res.status(200).json({ success: true, message: "Get all users", total, users })
+        return res.status(200).json({ success: true, message: "Get all users successful", total, users })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to get users" })
     }
@@ -28,7 +28,7 @@ const getUser = async (req, res) => {
     }
     try {
         const user = await User.findById(id)
-        return res.status(200).json({ success: true, message: "User already login", user })
+        return res.status(200).json({ success: true, message: "Get a user success", user })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Failed to check current user!" })
     }

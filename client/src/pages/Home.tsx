@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
+import { useEffect } from "react"
 
 const Home = () => {
-    const { name, id } = useAuth()
+    const { name, id, fetchUser } = useAuth()
+    useEffect(() => {
+        fetchUser()
+    }, [])
+
 
     return (
         <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center '>

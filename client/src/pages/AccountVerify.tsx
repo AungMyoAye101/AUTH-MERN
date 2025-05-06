@@ -29,7 +29,7 @@ const AccountVerify = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const { email } = useAuth()
+    const { email, fetchUser } = useAuth()
 
 
 
@@ -55,6 +55,7 @@ const AccountVerify = () => {
                 return
             }
             showToast("success", response.message)
+            fetchUser()
             navigate('/')
 
         } catch (error) {
