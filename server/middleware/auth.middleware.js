@@ -9,7 +9,6 @@ const userVerify = async (req, res, next) => {
 
     try {
         const decode = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decode)
         if (!decode.id) {
             return res.status(400).json({ success: false, message: "Your not authorized!" })
         } else {

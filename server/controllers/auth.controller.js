@@ -249,7 +249,6 @@ const findAccountSendOTP = async (req, res) => {
 }
 
 const verifyOTP = async (req, res) => {
-    console.log(req.body)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, message: errors.array() })
@@ -278,30 +277,23 @@ const verifyOTP = async (req, res) => {
     }
 }
 
+//Password reset function
 const passwordReset = async (req, res) => {
-    const { password, id } = req.body
-
-    console.log(password, id)
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    const { password } = req.body
+    if (!mongoose.Types.ObjectId.isValid(req.id)) {
         return res.status(400).json({ success: false, message: "Invalid user id!" })
     }
 
 
     try {
         const hashed = await bcrypt.hash(password, 10)
-        console.log("hashing...", hashed)
-        const user = await User.findOne({ _id: id })
+        const user = await User.findByIdAndUpdate(req.id, { password: hashed }, { new: true })
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" })
         }
-        console.log('user')
-        console.log(user)
-        user.password = hashed
-        await user.save()
-        console.log(user)
         return res.status(200).json({ success: true, message: "New password already set", user })
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Failed to reset password" })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 

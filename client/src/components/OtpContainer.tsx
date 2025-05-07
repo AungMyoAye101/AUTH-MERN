@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import Button from './ui/Button'
 import { base_url } from '../lib/helper'
 import { showToast } from '../context/ToastProvider'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 type OtpPropType = {
     heading: string,

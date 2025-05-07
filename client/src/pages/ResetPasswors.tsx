@@ -12,31 +12,26 @@ import Button from '../components/ui/Button'
 
 
 const password = z.object({
-    id: z.string().optional(),
     password: z.string().min(6, "Password must be at least 6 characters long.").regex(/[A-Z]/, "Password must include one uppercase letter").regex(/\d/, "Password must include one number")
 })
 type Password = z.infer<typeof password>
 const ResetPassword = () => {
-    const { id, fetchUser } = useAuth()
+    const { fetchUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(password),
-        defaultValues: {
-            password: '',
-            id
-        }
+
     })
     useEffect(() => {
         fetchUser()
-        setValue("id", id)
     }, [])
 
     const submitHandle = async (data: Password) => {
-        console.log(data)
+
         setLoading(true)
         try {
             const res = await fetch(base_url + "/auth/reset_password", {
