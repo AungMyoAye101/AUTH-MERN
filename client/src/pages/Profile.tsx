@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { base_url } from "../lib/helper"
 
 
+
 const Profile = () => {
     const [user, setuser] = useState({
         _id: '',
@@ -16,7 +17,7 @@ const Profile = () => {
     })
     const { id, fetchUser } = useAuth()
     const params = useParams()
-    console.log(user)
+    // console.log(user) // Debugging statement removed
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const getUser = async () => {
@@ -63,8 +64,9 @@ const Profile = () => {
         }
     }
     return (
-        <section className="h-screen mt-10">
-            <div className="p-4 bg-white shadow-md rounded-lg flex flex-col md:flex-row md:justify-between items-center gap-4" >
+
+        <section className="container">
+            <div className="p-4 bg-white shadow-md rounded-lg flex flex-col gap-2 w-96 border" >
 
                 <div className="flex gap-4 items-center">
                     <div className="w-20 h-20 rounded-full bg-orange-400 flex justify-center items-center text-2xl font-semibold text-blue-50 ">{user.name[0]}</div>
@@ -74,19 +76,20 @@ const Profile = () => {
                     </div>
                 </div>
                 {
-                    id === params.id && <div className="flex flex-row md:flex-col gap-1">
+                    id === params.id && <div className="flex  gap-1 self-end">
                         <Link to={`/update/${id}`} className=" link_btn text-xs ">Update</Link>
                         {
                             !user.isVerified && <Link to={'/account_verify'} className=" link_btn bg-orange-400 text-xs ">Verify Now</Link>
                         }
 
-                        <Button loading={loading} onClick={deleteHandler} className="text-xs bg-red-400">Delete</Button>
+                        <Button loading={loading} onClick={deleteHandler} className="text-xs bg-red-400 rounded-full">Delete</Button>
                     </div>
                 }
 
             </div>
 
         </section>
+
     )
 }
 

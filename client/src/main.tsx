@@ -4,15 +4,17 @@ import './index.css'
 import App from './App.tsx'
 import ToastProvider from './context/ToastProvider.tsx'
 import AuthProvider from './context/AuthProvider.tsx'
+import { BrowserRouter } from 'react-router-dom'
 // import { FetchProvider } from './context/useFetch.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-
-    <AuthProvider>
-      <ToastProvider />
-      <App />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <ToastProvider />
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>
 
 )

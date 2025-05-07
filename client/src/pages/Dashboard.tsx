@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthProvider'
 import { Link } from 'react-router-dom'
 import Button from '../components/ui/Button'
 
+
 const Dashboard = () => {
     const [users, setUsers] = useState<User[]>([])
     const [total, setTotal] = useState(0)
@@ -80,6 +81,8 @@ const Dashboard = () => {
 
 
     return (
+
+
         <section className='mt-4 space-y-4'>
             <div className='flex gap-4'>
                 <div className='bg-white shadow-md rounded-lg p-4 flex flex-col  w-52 hover:shadow-xl'>
@@ -141,6 +144,7 @@ const Dashboard = () => {
             </div>
 
         </section>
+
     )
 }
 

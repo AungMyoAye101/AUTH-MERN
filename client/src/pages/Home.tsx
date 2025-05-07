@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthProvider"
 import { useEffect } from "react"
 
+
 const Home = () => {
     const { name, id, fetchUser } = useAuth()
     useEffect(() => {
@@ -10,8 +11,8 @@ const Home = () => {
 
 
     return (
-        <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center '>
 
+        <div style={{ height: 'calc(100vh - 64px)' }} className='flex justify-center items-center '>
 
 
             <div className="flex flex-col items-center gap-1  max-w-2xl ">
@@ -35,6 +36,7 @@ const Home = () => {
             </div>
 
         </div>
+
     )
 }
 

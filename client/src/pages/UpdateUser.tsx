@@ -9,6 +9,7 @@ import { showToast } from "../context/ToastProvider"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/ui/Button"
 
+
 const updateUserSchema = z.object({
     id: z.string().optional(),
     name: z.string().min(1, "Name must contain at least one character"),
@@ -63,6 +64,7 @@ const UpdateUser = () => {
     }
 
     return (
+
         <section className='container'>
             <form onSubmit={handleSubmit(submitHandle)} className="form_container" >
                 {
@@ -77,6 +79,7 @@ const UpdateUser = () => {
             </form>
 
         </section>
+
     )
 }
 
