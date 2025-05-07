@@ -19,23 +19,25 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const handleChange = (value: string, index: number) => {
+        if (!/^\d?$/.test(value)) return;
 
         const newOtp = [...otp]
         newOtp[index] = value
         setOtp(newOtp)
-        if (value && index < 5) {
+        if (value && index < inputRefs.current.length - 1) {
+
+
             inputRefs.current[index + 1]?.focus()
         }
+
     }
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        if (e.key === 'Backspace') {
+        if (e.key === 'Backspace' && (e.target as HTMLInputElement).value === '' && index > 0) {
             const newOtp = [...otp];
             newOtp[index] = '';
             setOtp(newOtp)
 
-            if (index > 0) {
-                inputRefs.current[index - 1].focus()
-            }
+            inputRefs.current[index - 1].focus()
         }
     }
     const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -127,6 +129,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                         otp.map((_, i) => (
                             <input
                                 key={i}
+                                maxLength={1}
                                 ref={(ele) => { if (ele) inputRefs.current[i] = ele; }}
                                 type="text"
                                 onKeyDown={(e) => handleKeyDown(e, i)}
