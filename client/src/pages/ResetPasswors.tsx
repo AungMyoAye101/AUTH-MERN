@@ -66,7 +66,7 @@ const ResetPassword = () => {
         <section className='container'>
             <form onSubmit={handleSubmit(submitHandle)} className='form_container'>
                 <h1 className='text-xl md:text-2xl font-bold text-center text-neutral-700'>Reset Password</h1>
-                <FormController type='password' name='password' register={register} error={errors.password} placeholder='Enter new password' />
+                <FormController type='password' icon='/assets/key.svg' name='password' register={register} error={errors.password} placeholder='Enter new password' />
                 <Button type='submit' loading={loading}>Submit</Button>
                 {
                     error && <p className='error_message'>{error}</p>
