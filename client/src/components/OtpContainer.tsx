@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import Button from './ui/Button'
 import { base_url } from '../lib/helper'
 import { showToast } from '../context/ToastProvider'
-import { redirect } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 
 type OtpPropType = {
     heading: string,
@@ -10,13 +10,14 @@ type OtpPropType = {
     redirectURL: string
 }
 
-const OTP_EXPIRES_IN = 1 * 10
+const OTP_EXPIRES_IN = 5 * 60
 const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     const [otp, setOtp] = useState(Array(6).fill(''))
     const [otpTimer, setOtpTimer] = useState(OTP_EXPIRES_IN)
     const inputRefs = useRef<HTMLInputElement[]>([])
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
     const handleChange = (value: string, index: number) => {
 
         const newOtp = [...otp]
@@ -76,7 +77,11 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
         return `${min}:${sec}`
     }
 
-    const OnSubmitHandle = async () => {
+    const OnSubmitHandle = async (e: React.FormEvent) => {
+        e.preventDefault()
+        const data = otp.join('')
+        console.log(data)
+
 
         try {
             setLoading(true)
@@ -85,7 +90,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify(otp),
+                body: JSON.stringify({ otp: data }),
                 credentials: "include"
             })
             const { success, message } = await res.json()
@@ -95,7 +100,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                 return
             }
             showToast("success", message)
-            redirect(redirectURL)
+            navigate(redirectURL)
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message)
@@ -107,7 +112,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     }
     return (
         <section className='container'>
-            <div className='form_container '>
+            <form onSubmit={OnSubmitHandle} className='form_container '>
                 <div className='text-center space-y-1'>
 
                     <h1 className="text-2xl  font-bold text-neutral-700">{heading}</h1>
@@ -137,7 +142,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                     error && <p className='error_message'>{error}</p>
                 }
 
-            </div>
+            </form>
         </section>
     )
 }

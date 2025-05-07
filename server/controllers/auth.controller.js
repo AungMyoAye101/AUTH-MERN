@@ -221,6 +221,16 @@ const findAccountSendOTP = async (req, res) => {
         const otp = Math.floor(100000 + Math.random() * 900000)
         const otpExpireIn = new Date(Date.now() + 5 * 60 * 1000)
 
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1d'
+        })
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1 * 60 * 60 * 1000
+        });
+
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: user.email,
@@ -234,18 +244,19 @@ const findAccountSendOTP = async (req, res) => {
         await transporter.sendMail(mailOptions)
         return res.status(200).json({ success: true, message: "Password reset OTP is sent!", userId: user._id })
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Failed to reset password account!" })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 
 const verifyOTP = async (req, res) => {
+    console.log(req.body)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, message: errors.array() })
     }
     const { otp, userId } = req.body
     try {
-        const user = await User.findOne({ _id: userId })
+        const user = await User.findOne({ _id: req.id })
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found!" })
         }
@@ -263,7 +274,7 @@ const verifyOTP = async (req, res) => {
         });
         return res.status(200).json({ success: true, message: "Verify OTP success" })
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Failed to verify OTP!" })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 

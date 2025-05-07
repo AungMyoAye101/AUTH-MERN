@@ -11,9 +11,8 @@ authRouter.post('/logout', logout)
 authRouter.put('/update/:id', updateUser)
 authRouter.post('/verify', userVerify, sendOTP)
 authRouter.post('/verify_account', userVerify, otpSchema, verifyEmail)
-
 authRouter.post('/find_account', findAccountSendOTP)
-authRouter.post('/forgot_password/otp_verify', otpSchema, verifyOTP)
+authRouter.post('/forgot_password/otp_verify', userVerify, otpSchema, verifyOTP)
 authRouter.post('/reset_password', passwordReset)
 authRouter.delete('/delete_account', userVerify, deleteAccount)
 
