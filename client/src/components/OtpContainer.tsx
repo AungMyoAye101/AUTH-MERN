@@ -16,6 +16,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     const [otpTimer, setOtpTimer] = useState(OTP_EXPIRES_IN)
     const inputRefs = useRef<HTMLInputElement[]>([])
     const [error, setError] = useState('')
+    const [validatorMsg, setValidatorMsg] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const handleChange = (value: string, index: number) => {
@@ -82,8 +83,10 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     const OnSubmitHandle = async (e: React.FormEvent) => {
         e.preventDefault()
         const data = otp.join('')
-        console.log(data)
-
+        if (data.length !== 6) {
+            setValidatorMsg("OTP must contain 6 character")
+            return
+        }
 
         try {
             setLoading(true)
@@ -114,7 +117,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
     }
     return (
         <section className='container'>
-            <form onSubmit={OnSubmitHandle} className='form_container '>
+            <form onSubmit={OnSubmitHandle} className='form_container w-fit '>
                 <div className='text-center space-y-1'>
 
                     <h1 className="text-2xl  font-bold text-neutral-700">{heading}</h1>
@@ -124,7 +127,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                     otpTimer <= 0 ? <p className='text-sm font-semibold text-red-400'>Expired</p> : <p className={`text-sm font-semibold ${otpTimer < 60 ? "text-red-400 animate-pulse" : ''}`}>OTP expire in {formatTime(otpTimer)}</p>
                 }
 
-                <div className='flex gap-1 mx-auto'>
+                <div className='flex gap-1'>
                     {
                         otp.map((_, i) => (
                             <input
@@ -135,10 +138,13 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
                                 onKeyDown={(e) => handleKeyDown(e, i)}
                                 onChange={(e) => handleChange(e.target.value, i)}
                                 onPaste={handlePaste}
-                                className='w-12 h-14 text-center flex justify-center items-center border border-neutral-600 rounded-md  focus:outline-none  ' />
+                                className={`w-12 h-12 text-center flex justify-center items-center border  rounded-md  focus:outline-none ${validatorMsg ? "border-red-400" : "border-neutral-600"} `} />
                         ))
                     }
                 </div>
+                {
+                    validatorMsg && <p className='text-sm text-red-400'>{validatorMsg}</p>
+                }
 
                 <Button loading={loading} type='submit' className='rounded-full'>Verify Now</Button>
                 {

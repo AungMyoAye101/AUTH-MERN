@@ -30,6 +30,7 @@ const register = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
             maxAge: 1 * 60 * 60 * 1000
         });
 
@@ -77,7 +78,7 @@ const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
             maxAge: 1 * 60 * 60 * 1000
         });
 
@@ -94,6 +95,7 @@ const logout = async (req, res) => {
     try {
         res.clearCookie('token', {
             httpOnly: true,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
             secure: process.env.NODE_ENV === "production"
         });
         return res.status(200).json({ success: true, message: "User has been logout !" });
@@ -229,6 +231,7 @@ const findAccountSendOTP = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
             maxAge: 1 * 60 * 60 * 1000
         });
 
@@ -254,7 +257,7 @@ const verifyOTP = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, message: errors.array() })
     }
-    const { otp, userId } = req.body
+    const { otp } = req.body
     try {
         const user = await User.findOne({ _id: req.id })
         if (!user) {
@@ -270,6 +273,7 @@ const verifyOTP = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
             maxAge: 1 * 60 * 60 * 1000
         });
         return res.status(200).json({ success: true, message: "Verify OTP success" })
