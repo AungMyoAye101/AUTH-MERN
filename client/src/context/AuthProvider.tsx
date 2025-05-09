@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
-
 import { showToast } from "./ToastProvider"
 import { base_url } from "../lib/helper"
 
@@ -56,7 +55,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
                 isAdmin: user?.isAdmin
             })
         } catch (error) {
-            console.log(error)
             setUser(defaultUser)
         }
     }
@@ -86,7 +84,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         } catch (error: any) {
             showToast("error", error.message)
-            console.log(error)
         }
     }
 

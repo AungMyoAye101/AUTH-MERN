@@ -15,7 +15,7 @@ const Dashboard = () => {
     const totalUnverifyUsers = users.filter(user => user.isVerified === false)
     const [loading, setLoading] = useState(false)
     const { isAdmin } = useAuth()
-    console.log(users)
+
     const getUsers = async () => {
 
         setLoading(true)
@@ -32,7 +32,6 @@ const Dashboard = () => {
                 showToast("error", data.message)
                 return
             }
-            console.log(data)
             setUsers(data.users)
             setTotal(data.total)
         } catch (error) {
