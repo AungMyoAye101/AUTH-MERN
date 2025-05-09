@@ -84,7 +84,7 @@ const OtpContainer: FC<OtpPropType> = ({ heading, endpoint, redirectURL }) => {
         e.preventDefault()
         const data = otp.join('')
         if (data.length !== 6) {
-            setValidatorMsg("OTP must contain 6 character")
+            setValidatorMsg("OTP must contain 6 characters")
             return
         }
 

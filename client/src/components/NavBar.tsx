@@ -21,7 +21,7 @@ const NavBar = () => {
                     {id ?
                         <>
 
-                            <Link to={'/dashboard'} className="text-white bg-blue-500 text-xs md:text-sm font-serif px-4 py-2 rounded-xl flex justify-center items-center">Dashboard</Link>
+                            <Link to={'/dashboard'} className="text-white bg-blue-500 text-xs md:text-sm font-serif px-4 py-2 rounded-full flex justify-center items-center">Dashboard</Link>
                             <Button onClick={logout} className="link_btn">Logout</Button>
                             <div className="relative">
 

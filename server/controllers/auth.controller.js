@@ -30,7 +30,7 @@ const register = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : 'lax',
             maxAge: 1 * 60 * 60 * 1000
         });
 
@@ -78,7 +78,7 @@ const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : 'lax',
             maxAge: 1 * 60 * 60 * 1000
         });
 
@@ -95,7 +95,7 @@ const logout = async (req, res) => {
     try {
         res.clearCookie('token', {
             httpOnly: true,
-            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : 'lax',
             secure: process.env.NODE_ENV === "production"
         });
         return res.status(200).json({ success: true, message: "User has been logout !" });
@@ -143,7 +143,7 @@ const sendOTP = async (req, res) => {
             to: user.email,
             subject: "Simple Auth OTP",
             text: `<div><h1>Hello, ${user.name}</h1> <h2>Your OTP is <b>${otp}</b> expires in 5 minutes.</h2><p>Don't share anyone.</p>
-            <p><i>Thank you for</i> choosing our website.</p></div>`,
+            <p><i>Thank you for</i> choosing our website. Now, you can use all features on our site.</p></div>`,
         }
         await transporter.sendMail(mailOptions)
 
@@ -231,7 +231,7 @@ const findAccountSendOTP = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : '',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : 'lax',
             maxAge: 1 * 60 * 60 * 1000
         });
 
