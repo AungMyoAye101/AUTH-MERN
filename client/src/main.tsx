@@ -12,7 +12,11 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <AuthProvider>
         <ToastProvider />
+       
+          <img src="/assets/white-background.jpg" alt="white background photo"  className='absolute -z-10 inset-0 w-full h-full object-cover'/>
+
         <App />
+     
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>
